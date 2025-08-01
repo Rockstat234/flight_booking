@@ -1,0 +1,40 @@
+ .home {
+  padding: 20px;
+}
+
+.carousel {
+  background: linear-gradient(135deg, #004f7c, #ffa07a);
+  color: #fff;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.services,
+.travel-prep {
+  margin: 40px 0;
+}
+
+.service-cards,
+.prep-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background-color: #f5f5f5;
+  padding: 25px;
+  flex: 1 1 240px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}

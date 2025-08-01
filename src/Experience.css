@@ -1,0 +1,84 @@
+.experience-wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  padding: 40px 20px;
+  background: linear-gradient(to bottom, #fffaf5, #ffffff);
+}
+
+.experience-hero {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.hero-banner-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.glow-button {
+  padding: 12px 30px;
+  background: #a4161a;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px #d72631, 0 0 20px #d72631;
+  transition: 0.3s;
+}
+
+.glow-button:hover {
+  background: #d72631;
+  transform: scale(1.06);
+}
+
+.experience-grid-section {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.experience-grid-section h2 {
+  font-size: 35px;
+  margin-bottom: 30px;
+  color: #a4161a;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.exp-card {
+  background: #fff;
+  padding: 25px 20px;
+  border-radius: 20px;
+  border-left: 6px solid #a4161a;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  transition: 0.3s;
+}
+
+.exp-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+  border-color: #d72631;
+  background: linear-gradient(to bottom, #ffffff, #fff1f1);
+}
+
+.exp-card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #4b1e1e;
+}
+
+.exp-card p {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.6;
+}

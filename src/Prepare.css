@@ -1,0 +1,116 @@
+.prepare-section {
+  background: linear-gradient(to right, #fff5f5, #fdecea);
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.prepare-content {
+  max-width: 1200px;
+  width: 100%;
+  text-align: center;
+}
+
+.prepare-content h1 {
+  font-size: 40px;
+  font-weight: bold;
+  color: #b91c1c;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #dc2626;
+  margin-bottom: 25px;
+}
+
+.prepare-content p {
+  font-size: 17px;
+  color: #444;
+  margin: 0 auto 45px auto;
+  max-width: 800px;
+}
+
+.prepare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.prepare-card {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-left: 5px solid #b91c1c;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+.prepare-card:nth-child(2) { animation-delay: 0.1s; }
+.prepare-card:nth-child(3) { animation-delay: 0.2s; }
+.prepare-card:nth-child(4) { animation-delay: 0.3s; }
+
+.prepare-card h3 {
+  font-size: 20px;
+  color: #b91c1c;
+  margin-bottom: 10px;
+}
+
+.prepare-card p {
+  font-size: 15px;
+  color: #333;
+}
+
+.prepare-btn {
+  background: #b91c1c;
+  color: white;
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.prepare-btn:hover {
+  background: #7f1d1d;
+  transform: scale(1.05);
+}
+
+.card-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #ef4444;
+  color: white;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .prepare-content h1 {
+    font-size: 28px;
+  }
+
+  .prepare-btn {
+    width: 100%;
+  }
+
+  .prepare-card {
+    padding: 18px;
+  }
+}

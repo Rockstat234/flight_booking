@@ -1,0 +1,77 @@
+.tariff-section {
+  padding: 40px 20px;
+  background-color: #fff;
+}
+
+.tariff-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.tariff-header h2 {
+  font-size: 28px;
+  color: #a6001a; 
+  margin-bottom: 8px;
+}
+
+.tariff-header p {
+  font-size: 14px;
+  color: #555;
+}
+
+.tariff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.tariff-card {
+  background-color: #fff0f0;
+  border: 1px solid #f5bcbc;
+  border-radius: 12px;
+  padding: 20px;
+  transition: 0.3s ease;
+  text-align: center;
+}
+
+.tariff-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(255, 0, 0, 0.1);
+}
+
+.tariff-card h3 {
+  font-size: 18px;
+  color: #b30000;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.price {
+  font-size: 16px;
+  font-weight: bold;
+  color: #a6001a;
+  margin-bottom: 12px;
+}
+
+.book-btn {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #d9232d;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #990000;
+}

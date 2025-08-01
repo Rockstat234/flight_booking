@@ -1,0 +1,76 @@
+.fly-section {
+  background: linear-gradient(to bottom, #f8f8f8, #ffffff);
+  padding: 60px 20px;
+  font-family: "Segoe UI", sans-serif;
+  text-align: center;
+}
+
+.fly-container h1 {
+  font-size: 36px;
+  color: #a4161a;
+  margin-bottom: 10px;
+}
+
+.fly-container p {
+  font-size: 18px;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.fly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.fly-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease-in-out;
+}
+
+.fly-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+.fly-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.fly-info {
+  padding: 20px;
+}
+
+.fly-info h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #002b5b;
+}
+
+.fly-info p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.fly-btn {
+  background: #a4161a;
+  color: white;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-weight: 600;
+}
+
+.fly-btn:hover {
+  background: #d72631;
+}
