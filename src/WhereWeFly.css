@@ -1,76 +1,348 @@
+/* WhereWeFly.css */
+
+/* Base Styles */
 .fly-section {
-  background: linear-gradient(to bottom, #f8f8f8, #ffffff);
-  padding: 60px 20px;
-  font-family: "Segoe UI", sans-serif;
-  text-align: center;
+  padding: 4rem 2rem;
+  background: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.fly-container h1 {
-  font-size: 36px;
-  color: #a4161a;
-  margin-bottom: 10px;
-}
-
-.fly-container p {
-  font-size: 18px;
-  color: #555;
-  margin-bottom: 40px;
-}
-
-.fly-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
+.fly-container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
+.fly-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.fly-header h1 {
+  font-size: 2.5rem;
+  color: #df0f0f;
+  margin-bottom: 1rem;
+}
+
+.fly-header p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Card Styles */
+.fly-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
 .fly-card {
-  background: #fff;
-  border-radius: 16px;
+  background: white;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: 0.3s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .fly-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
-.fly-card img {
-  width: 100%;
+.card-image-container {
+  position: relative;
   height: 200px;
+  overflow: hidden;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.fly-card:hover .card-image-container img {
+  transform: scale(1.05);
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  padding: 1.5rem;
+  color: white;
+}
+
+.card-overlay h3 {
+  margin: 0;
+  font-size: 1.8rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.explore-btn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.explore-btn:hover {
+  background: #c62828;
+  transform: translateX(5px);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgb(255, 254, 254);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  position: relative;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.close-modal:hover {
+  color: #e53935;
+}
+
+/* Improved Modal Text Visibility */
+.modal-header h2 {
+  color: #2241dd;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.modal-image-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.modal-image-container img {
+  width: 100%;
+  max-height: 300px;
   object-fit: cover;
 }
 
-.fly-info {
-  padding: 20px;
+.modal-badges {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
-.fly-info h3 {
-  font-size: 20px;
-  margin-bottom: 8px;
-  color: #002b5b;
-}
-
-.fly-info p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 15px;
-}
-
-.fly-btn {
-  background: #a4161a;
-  color: white;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: 0.3s ease;
+.modal-badge {
+  background: #f0f0f0;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #333;
 }
 
-.fly-btn:hover {
-  background: #d72631;
+.modal-badge.price {
+  background: #e53935;
+  color: white;
+}
+
+.modal-body {
+  margin-top: 1.5rem;
+}
+
+.modal-section h3 {
+  color: #dc1818;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.modal-description {
+  color: #444;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.special-attractions h4 {
+  color: #e60a0a;
+  margin: 1.5rem 0 1rem;
+  font-size: 1.2rem;
+}
+
+.attractions-list {
+  padding-left: 1.5rem;
+  color: #555;
+}
+
+.attractions-list li {
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+.flight-info {
+  margin-top: 2rem;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.info-item {
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #d70d0d;
+  margin-right: 0.5rem;
+}
+
+.info-value {
+  color: #e9e6e6;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.book-now-btn {
+  background: #e53935;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.book-now-btn:hover {
+  background: #c62828;
+}
+
+.close-btn {
+  background: transparent;
+  color: #1a237e;
+  border: 2px solid #1a237e;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.close-btn:hover {
+  background: #1a237e;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fly-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modal-footer {
+    flex-direction: column;
+  }
+  
+  .book-now-btn, .close-btn {
+    width: 100%;
+  }
+  
+  .modal-description {
+    font-size: 1rem;
+  }
+  
+  .attractions-list li {
+    font-size: 0.95rem;
+  }
+}
+/* Load More Button */
+.load-more-container {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.load-more-btn {
+  display: inline-block;
+  background: #1a73e8;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.load-more-btn:hover {
+  background: #0d5bba;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }

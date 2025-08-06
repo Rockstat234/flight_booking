@@ -15,7 +15,7 @@ const Footer = () => {
               { to: "/book-flights", label: "Book Flights" },
               { to: "/manage-booking", label: "Manage Booking" },
               { to: "/checkin", label: "Check-in" },
-              { to: "/flight-schedule", label: "Flight Schedule" },
+              { to: "/Schedule", label: "Flight Schedule" },
             ],
           },
           {
@@ -40,7 +40,7 @@ const Footer = () => {
             links: [
               { to: "/customer-care", label: "Customer Care" },
               { to: "/feedback", label: "Feedback" },
-              { to: "/faqs", label: "FAQs" },
+              { to: "/faq", label: "FAQs" },
               { to: "/contact", label: "Contact Us" },
             ],
           },
@@ -59,7 +59,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-middle">
-        <div className="footer-logo">Air India</div>
+        <div className="footer-logo">Bharat Yatra</div>
         <p className="footer-tagline">Wings of Change. Welcome Aboard.</p>
         <div className="footer-social">
           <i className="fab fa-facebook-f"></i>
@@ -70,7 +70,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        &copy; {year} Air India Ltd. | All rights reserved
+        &copy; {year} Bharat Yatra Ltd. | All rights reserved
       </div>
     </footer>
   );

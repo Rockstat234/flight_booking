@@ -5,7 +5,7 @@ import { SearchIcon } from "lucide-react";
 const Search = () => {
   return (
     <div className="search-wrapper">
-      <h1 className="search-heading">Explore Air India Services</h1>
+      <h1 className="search-heading">Explore Bharat Yatra Services</h1>
       <p className="search-subtext">Find info about offers, gift cards & more.</p>
 
       <div className="search-box">

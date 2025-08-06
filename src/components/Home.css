@@ -1,40 +1,293 @@
- .home {
-  padding: 20px;
+/* Main Container */
+.air-india-app {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  overflow-x: hidden;
 }
 
-.carousel {
-  background: linear-gradient(135deg, #004f7c, #ffa07a);
-  color: #fff;
-  height: 300px;
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 80vh;
+  max-height: 800px;
+  overflow: hidden;
+  border-bottom: 4px solid #d40504;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.cta-button {
+  background: #d40504;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.cta-button:hover {
+  background: #b00000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.section-header h2 {
+  color: #d40504;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.divider {
+  height: 4px;
+  width: 80px;
+  background: #d40504;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Flip Cards */
+.flip-cards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 280px;
+  height: 350px;
+  perspective: 1000px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  border-radius: 12px;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, 
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.flip-card-front {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #d40504 0%, #a00000 100%);
+  color: white;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-content {
+  padding: 1.5rem;
+  width: 100%;
+}
+
+.flip-card-front .card-content {
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+
+.flip-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.flip-card p {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.flip-hint {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-top: 1rem;
+  animation: pulse 2s infinite;
+}
+
+.card-button {
+  background: white;
+  color: #d40504;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* Travel Cards */
+.travel-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.travel-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.travel-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body h3 {
+  color: #4a154b;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-body p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Floating CTA */
+.floating-cta {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #d40504;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 100;
 }
 
-.services,
-.travel-prep {
-  margin: 40px 0;
+.floating-cta:hover {
+  background: #b00000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
 }
 
-.service-cards,
-.prep-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+/* Animations */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
 
-.card {
-  background-color: #f5f5f5;
-  padding: 25px;
-  flex: 1 1 240px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+  
+  .flip-card {
+    width: 220px;
+    height: 300px;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
 }

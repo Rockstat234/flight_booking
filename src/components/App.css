@@ -1,0 +1,433 @@
+/* Base Styles */
+.air-india-app {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 80vh;
+  max-height: 800px;
+  overflow: hidden;
+  border-bottom: 4px solid #d40504;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.4);
+  color: white;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+.cta-button {
+  background: #d40504;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.cta-button:hover {
+  background: #b00000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+/* Section Header */
+.section-header {
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.section-header h2 {
+  color: #d40504;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.divider {
+  height: 4px;
+  width: 80px;
+  background: #d40504;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+/* Services Section */
+.services-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.service-card {
+  width: 280px;
+  height: 350px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
+
+.card-image {
+  height: 60%;
+  background-size: cover;
+  background-position: center;
+  transition: all 0.4s ease;
+}
+
+.service-card:hover .card-image {
+  height: 40%;
+  filter: brightness(0.8);
+}
+
+.card-content {
+  padding: 20px;
+  height: 40%;
+  background: white;
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.service-card:hover .card-content {
+  height: 60%;
+  background: #f8f8f8;
+}
+
+.card-content h3 {
+  color: #d40504;
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-desc {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.hidden-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.service-card:hover .hidden-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.service-card:hover .card-desc {
+  opacity: 0;
+}
+
+/* Travel Cards */
+.travel-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.travel-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.travel-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.card-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.card-body h3 {
+  color: #4a154b;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.card-body p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.card-button {
+  background: #d40504;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.card-button:hover {
+  background: #b00000;
+  transform: translateY(-2px);
+}
+
+.card-button span {
+  margin-left: 5px;
+  transition: transform 0.3s ease;
+}
+
+.card-button:hover span {
+  transform: translateX(3px);
+}
+
+/* Floating CTA */
+.floating-cta {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #d40504;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.floating-cta:hover {
+  background: #b00000;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-content p {
+    font-size: 1.2rem;
+  }
+  
+  .service-card {
+    width: 240px;
+    height: 320px;
+  }
+  
+  .section-header h2 {
+    font-size: 2rem;
+  }
+  
+  .travel-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Add these styles to your existing App.css */
+
+/* Prepare to Travel Section - Updated Styles */
+.travel-guides {
+  padding: 4rem 5%;
+  background-color: #f9f9f9;
+}
+
+.travel-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.travel-card {
+  width: 280px;
+  height: 320px;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.travel-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.card-front {
+  background: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-back {
+  background: linear-gradient(135deg, #2a5c8d, #1a4a7a);
+  color: white;
+  transform: rotateY(180deg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.travel-card .card-image {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+}
+
+.travel-card .card-body {
+  padding: 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #c80b0b;
+}
+
+.travel-card .card-body p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.travel-card .card-back p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.travel-card .card-button {
+  align-self: flex-start;
+  background: none;
+  color: white;
+  border: 1px solid white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.travel-card .card-button:hover {
+  background: white;
+  color: #2a5c8d;
+}
+
+.travel-card .card-button span {
+  transition: transform 0.3s;
+}
+
+.travel-card .card-button:hover span {
+  transform: translateX(3px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .travel-card {
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .travel-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}

@@ -1,0 +1,79 @@
+/* components/FaqPage.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+.faq-container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+.faq-container h1 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #d2232a;
+}
+
+.faq-section {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+
+.section-title {
+  width: 100%;
+  background-color: #fff;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 600;
+  text-align: left;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title:hover {
+  background-color: #f0f0f0;
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+.faq-list {
+  background-color: #fafafa;
+  padding: 12px 16px;
+}
+
+.faq-item + .faq-item {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.question {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.answer {
+  line-height: 1.5;
+  color: #555;
+}

@@ -1,186 +1,138 @@
-/* General Styles */
-.air-india-wrapper {
-  font-family: Arial, sans-serif;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Header Styles */
-.air-india-header {
+.login-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
+  min-height: 100vh;
+  background: linear-gradient(to right, #fff, #f8f8f8);
 }
 
-.air-india-title {
+.login-box {
   display: flex;
-  align-items: center;
-  font-size: 24px;
-  color: #003580; /* Air India blue */
+  width: 80%;
+  max-width: 960px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-.logo-icon {
-  margin-right: 10px;
-  color: #003580;
+.login-left,
+.login-right {
+  flex: 1;
+  padding: 40px;
 }
 
-.air-india-nav {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-link {
-  cursor: pointer;
-  color: #003580;
-}
-
-/* Search Section */
-.search-section {
-  background-color: #f7f7f7;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 30px;
-}
-
-.section-title {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.flight-options {
-  margin-bottom: 20px;
-}
-
-.option-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.option-label {
-  font-weight: bold;
-}
-
-.option-value {
-  color: #666;
-}
-
-.travelers-section {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px 0;
-}
-
-.search-button, .explore-button {
+.login-img {
   width: 100%;
-  padding: 12px;
-  margin-bottom: 10px;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
+  max-width: 280px;
+  display: block;
+  margin: 0 auto 20px;
 }
 
-.search-button {
-  background-color: #003580;
-  color: white;
-}
-
-.explore-button {
-  background-color: white;
-  color: #003580;
-  border: 1px solid #003580;
-}
-
-/* Sign In Section */
-.signin-section {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.signin-title {
-  color: #003580;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-
-.signin-subtitle {
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.signin-description {
-  color: #666;
-  margin-bottom: 20px;
+.benefits {
+  list-style: none;
+  padding: 0;
+  color: #555;
   font-size: 14px;
 }
 
-.auth-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 15px;
+.benefits li {
+  margin: 10px 0;
 }
 
-.email-button, .social-button {
-  padding: 12px;
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background: #eee;
   border: none;
-  border-radius: 4px;
-  font-weight: bold;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
-.email-button {
-  background-color: #003580;
+.tab.active {
+  background: #f01111ff;
   color: white;
 }
 
-.social-button {
-  background-color: white;
-  border: 1px solid #ddd;
+.label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
 }
 
-.facebook {
-  color: #1877F2;
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }
 
-.google {
-  color: #DB4437;
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #f01111ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.apple {
-  color: #000;
+.terms {
+  margin: 15px 0;
+  font-size: 12px;
+  color: #555;
 }
 
-.social-icon {
-  margin-right: 10px;
-  font-size: 18px;
+.terms a {
+  color: #f01111ff;
+  text-decoration: none;
 }
 
-.remember-me {
+.divider {
+  text-align: center;
+  margin: 20px 0;
+  color: #aaa;
+  position: relative;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  height: 1px;
+  width: 40%;
+  background: #ddd;
+  position: absolute;
+  top: 50%;
+}
+
+.divider::before {
+  left: 0;
+}
+
+.divider::after {
+  right: 0;
+}
+
+.google-btn {
+  width: 100%;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
-}
-
-.remember-me input {
-  margin-right: 10px;
-}
-
-.terms-text {
-  font-size: 12px;
-  color: #666;
-  text-align: center;
+  justify-content: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
 }
