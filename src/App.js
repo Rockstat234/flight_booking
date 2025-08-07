@@ -13,21 +13,22 @@ import Home from './components/Home';
 import MaharajaClub from "./MaharajaClub";
 import Experience from "./Experience";
 import Prepare from "./Prepare";
-import WhereWeFly from "./WhereWeFly";
+import WhereWeFly from "./WhereWeFly"; // Only one import
 import BookManage from './BookManage';
 import EzBooking from './EzBooking';
 import ContactUs from './ContactUs';
 import ManageBooking from './components/ManageBooking';
 import FaqPage from './components/FaqPage';
 import FlightSchedule from './components/FlightSchedule';
+import DestinationDetails from './DestinationDetail';
 
 function App() {
   return (
     <div>
-      {/* ✅ Fixed Navbar */}
+      {/* Fixed Navbar */}
       <Navbar />
 
-      {/* ✅ Page content pushed down below fixed Navbar */}
+      {/* Page content pushed down below fixed Navbar */}
       <div style={{ paddingTop: '125px' }}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -47,9 +48,10 @@ function App() {
           <Route path="/manage-booking" element={<ManageBooking />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/schedule" element={<FlightSchedule />} />
+          <Route path="/destination/:city" element={<DestinationDetails />} />
         </Routes>
 
-        {/* ✅ Footer stays below all content */}
+        {/* Footer stays below all content */}
         <Footer />
       </div>
     </div>
