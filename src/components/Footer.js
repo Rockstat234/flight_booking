@@ -1,76 +1,156 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { 
+  MapPin, Headphones, HelpCircle, Phone, Download, 
+  Facebook, Twitter, Instagram, Youtube, Linkedin,
+  ArrowRight
+} from "lucide-react";
 import "./Footer.css";
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="ai-footer">
-      <div className="footer-top">
-        {[
-          {
-            title: "Book & Manage",
-            links: [
-              { to: "/book-flights", label: "Book Flights" },
-              { to: "/manage-booking", label: "Manage Booking" },
-              { to: "/checkin", label: "Check-in" },
-              { to: "/Schedule", label: "Flight Schedule" },
-            ],
-          },
-          {
-            title: "Where We Fly",
-            links: [
-              { to: "/domestic-routes", label: "Domestic Routes" },
-              { to: "/international-routes", label: "International Routes" },
-              { to: "/route-map", label: "Route Map" },
-            ],
-          },
-          {
-            title: "Information",
-            links: [
-              { to: "/travel-guidelines", label: "Travel Guidelines" },
-              { to: "/baggage", label: "Baggage" },
-              { to: "/visa-docs", label: "Visa & Documents" },
-              { to: "/special-assistance", label: "Special Assistance" },
-            ],
-          },
-          {
-            title: "Support",
-            links: [
-              { to: "/customer-care", label: "Customer Care" },
-              { to: "/feedback", label: "Feedback" },
-              { to: "/faq", label: "FAQs" },
-              { to: "/contact", label: "Contact Us" },
-            ],
-          },
-        ].map((col, index) => (
-          <div className="footer-column" key={index}>
-            <h4>{col.title}</h4>
-            <ul>
-              {col.links.map((link, i) => (
-                <li key={i}>
-                  <Link to={link.to}>{link.label}</Link>
-                </li>
-              ))}
+    <footer className="modern-footer">
+      {/* Main Footer Content */}
+      <div className="footer-content">
+        {/* Left Side - Navigation */}
+        <div className="footer-nav">
+          <div className="nav-section">
+            <h3 className="nav-title">
+              <span className="title-underline">Book & Manage</span>
+            </h3>
+            <ul className="nav-links">
+              <li>
+                <Link to="/BookFlights" className="nav-link">
+                  <ArrowRight size={14} /> Book Flights
+                </Link>
+              </li>
+              <li>
+                <Link to="/manage-booking" className="nav-link">
+                  <ArrowRight size={14} /> Manage Booking
+                </Link>
+              </li>
+              <li>
+                <Link to="/checkin" className="nav-link">
+                  <ArrowRight size={14} /> Check-in
+                </Link>
+              </li>
+              <li>
+                <Link to="/schedule" className="nav-link">
+                  <ArrowRight size={14} /> Flight Schedule
+                </Link>
+              </li>
             </ul>
           </div>
-        ))}
-      </div>
 
-      <div className="footer-middle">
-        <div className="footer-logo">Bharat Yatra</div>
-        <p className="footer-tagline">Wings of Change. Welcome Aboard.</p>
-        <div className="footer-social">
-          <i className="fab fa-facebook-f"></i>
-          <i className="fab fa-twitter"></i>
-          <i className="fab fa-youtube"></i>
-          <i className="fab fa-instagram"></i>
+          <div className="nav-section">
+            <h3 className="nav-title">
+              <span className="title-underline">Destinations</span>
+            </h3>
+            <ul className="nav-links">
+              <li>
+                <Link to="/domestic-routes" className="nav-link">
+                  <MapPin size={14} /> Domestic Routes
+                </Link>
+              </li>
+              <li>
+                <Link to="/international-routes" className="nav-link">
+                  <MapPin size={14} /> International Routes
+                </Link>
+              </li>
+              <li>
+                <Link to="/route-map" className="nav-link">
+                  <MapPin size={14} /> Route Map
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="nav-section">
+            <h3 className="nav-title">
+              <span className="title-underline">Support</span>
+            </h3>
+            <ul className="nav-links">
+              <li>
+                <Link to="/customer-care" className="nav-link">
+                  <Headphones size={14} /> Customer Care
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="nav-link">
+                  <HelpCircle size={14} /> FAQs
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="nav-link">
+                  <Phone size={14} /> Contact Us
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Right Side - App Download */}
+        <div className="app-promo">
+          <div className="app-content">
+            <h3>Fly Better with Our App</h3>
+            <p>Download now for exclusive deals and easier booking</p>
+            
+            <div className="app-badges">
+              <a href="#" className="app-badge">
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
+                  alt="App Store" 
+                />
+              </a>
+              <a href="#" className="app-badge">
+                <img 
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                  alt="Google Play" 
+                />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
+      {/* Footer Bottom */}
       <div className="footer-bottom">
-        &copy; {year} Bharat Yatra Ltd. | All rights reserved
+        <div className="footer-brand">
+          <div className="logo-wrapper">
+            <img src="/images/bharat.jpg" alt="Bharat Yatra" className="footer-logo" />
+            <span className="brand-name">Bharat Yatra</span>
+          </div>
+          <p className="tagline">Wings of Change. Welcome Aboard.</p>
+        </div>
+
+        <div className="footer-legal">
+          <div className="social-icons">
+            <a href="#" className="social-icon">
+              <Facebook size={18} />
+            </a>
+            <a href="#" className="social-icon">
+              <Twitter size={18} />
+            </a>
+            <a href="#" className="social-icon">
+              <Instagram size={18} />
+            </a>
+            <a href="#" className="social-icon">
+              <Youtube size={18} />
+            </a>
+            <a href="#" className="social-icon">
+              <Linkedin size={18} />
+            </a>
+          </div>
+
+          <div className="legal-links">
+            <span>&copy; {year} Bharat Yatra</span>
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+            <Link to="/cookies">Cookie Policy</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

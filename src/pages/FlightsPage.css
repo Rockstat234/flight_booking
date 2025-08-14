@@ -1,0 +1,75 @@
+/* Container spacing */
+.container {
+  max-width: 1200px;
+}
+
+/* Heading style */
+h2 {
+  font-weight: 700;
+  color: #0d6efd;
+}
+
+/* Search Bar Styling */
+input.form-control {
+  height: 50px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding-left: 15px;
+  transition: all 0.3s ease;
+}
+
+input.form-control:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 6px rgba(13, 110, 253, 0.4);
+}
+
+/* Search Button */
+button.btn-primary {
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background: linear-gradient(90deg, #0b5ed7, #0a58ca);
+}
+
+/* Flight Cards */
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0d6efd;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+/* Book Now Button */
+button.btn-success {
+  background: linear-gradient(90deg, #198754, #157347);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+button.btn-success:hover {
+  background: linear-gradient(90deg, #157347, #146c43);
+}

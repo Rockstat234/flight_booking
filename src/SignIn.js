@@ -1,12 +1,50 @@
 import React, { useState } from "react";
-import "./SignIn.css"; // Make sure the filename matches exactly
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./SignIn.css";
 
 export default function SignIn() {
   const [activeTab, setActiveTab] = useState("personal");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!email || !password) {
+      setError("Please enter both email and password");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://localhost:8000/api/login", {
+        email,
+        password,
+        accountType: activeTab
+      });
+
+      // API ने role परत दिला आहे असं गृहीत धरून
+      localStorage.setItem("role", res.data.role);
+      localStorage.setItem("token", res.data.token);
+
+      setError("");
+
+      if (res.data.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
+    }
+  };
 
   return (
     <div className="login-container">
       <div className="login-box">
+        {/* LEFT SIDE */}
         <div className="login-left">
           {activeTab === "personal" ? (
             <>
@@ -29,7 +67,9 @@ export default function SignIn() {
           )}
         </div>
 
+        {/* RIGHT SIDE */}
         <div className="login-right">
+          {/* Tabs */}
           <div className="tabs">
             <button
               className={activeTab === "personal" ? "tab active" : "tab"}
@@ -47,6 +87,7 @@ export default function SignIn() {
 
           <h3>Login or Create an Account</h3>
 
+          {/* Email */}
           <label className="label">
             {activeTab === "personal" ? "Email Id / Mobile Number" : "Work Email"}
           </label>
@@ -55,10 +96,28 @@ export default function SignIn() {
             placeholder={
               activeTab === "personal" ? "Email Id / Mobile Number" : "Enter Work Email"
             }
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="input"
           />
 
-          <button className="login-btn">Login</button>
+          {/* Password */}
+          <label className="label">Password</label>
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="input"
+          />
+
+          {/* Error message */}
+          {error && <p style={{ color: "red", marginTop: "5px" }}>{error}</p>}
+
+          {/* Login Button */}
+          <button className="login-btn" onClick={handleLogin}>
+            Login
+          </button>
 
           <p className="terms">
             By proceeding, you agree with our{" "}
@@ -69,6 +128,7 @@ export default function SignIn() {
 
           <div className="divider">Or</div>
 
+          {/* Google Sign In */}
           <button className="google-btn">
             <img src="/images/google-icon.png" alt="Google" /> Sign in with Google
           </button>

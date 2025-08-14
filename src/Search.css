@@ -1,57 +1,92 @@
 .search-wrapper {
-  background: #f7f7f7;
-  padding: 60px 15px;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
   text-align: center;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .search-heading {
   font-size: 2rem;
-  color: #a6001a;
-  margin-bottom: 10px;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
 }
 
 .search-subtext {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 25px;
+  color: #7f8c8d;
+  margin-bottom: 2rem;
 }
 
 .search-box {
-  max-width: 600px;
-  margin: auto;
+  position: relative;
   display: flex;
   align-items: center;
-  background: #fff;
-  border: 2px solid #a6001a;
-  border-radius: 30px;
-  padding: 10px 15px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  padding: 0.5rem 1rem;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .search-icon {
-  font-size: 18px;
-  color: #a6001a;
-  margin-right: 10px;
+  color: #9aa0a6;
+  margin-right: 0.5rem;
 }
 
 .search-input {
   flex: 1;
   border: none;
   outline: none;
-  font-size: 16px;
+  font-size: 1rem;
+  padding: 0.5rem;
 }
 
 .search-btn {
-  background: #a6001a;
-  color: #fff;
+  background-color: #4285f4;
+  color: white;
   border: none;
-  padding: 8px 20px;
-  font-size: 15px;
-  border-radius: 20px;
+  border-radius: 18px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .search-btn:hover {
-  background: #7d0014;
+  background-color: #3367d6;
+}
+
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #dfe1e5;
+  border-radius: 0 0 24px 24px;
+  margin-top: -10px;
+  padding-top: 10px;
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-result-item:hover {
+  background-color: #f8f9fa;
+}
+
+.no-results {
+  color: #7f8c8d;
+  cursor: default;
+}
+
+.no-results:hover {
+  background-color: white;
 }

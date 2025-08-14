@@ -1,508 +1,489 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./BookManage.css";
 import { 
-  FiSearch, 
-  FiEdit, 
-  FiCheckCircle, 
-  FiClock, 
-  FiMapPin, 
-  FiCalendar, 
-  FiUsers,
-  FiChevronDown,
-  FiNavigation,
-  FiStar,
-  FiHeart
-} from 'react-icons/fi';
-import './BookManage.css';
+  Search, Edit, CheckCircle, Clock, 
+  ArrowRight, Ticket, Plane, User, 
+  CreditCard, Luggage, MapPin, Calendar,
+  ChevronRight, ShieldCheck, Info
+} from "lucide-react";
 
 function BookManage() {
-  const [activeTab, setActiveTab] = useState('flights');
-  const [location, setLocation] = useState(null);
-  const [isLoadingLocation, setIsLoadingLocation] = useState(false);
-  const [departureDate, setDepartureDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
-  const [passengers, setPassengers] = useState(1);
-  const [tripType, setTripType] = useState('roundtrip');
-  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
-  const [destination, setDestination] = useState('');
-  const [bookingRef, setBookingRef] = useState('');
-  const [recentSearches, setRecentSearches] = useState([]);
-
-  const popularDestinations = [
-    { name: 'New York', code: 'NYC', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-    { name: 'London', code: 'LON', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-    { name: 'Paris', code: 'PAR', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-    { name: 'Tokyo', code: 'TYO', image: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-    { name: 'Dubai', code: 'DXB', image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' },
-  ];
-
-  const testimonials = [
-    {
-      quote: "The easiest booking experience I've ever had. Found great deals on flights!",
-      author: "Sarah J.",
-      rating: 5
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("book");
+  const [formData, setFormData] = useState({
+    pnr: "",
+    lastName: "",
+    flightNumber: "",
+    departureDate: ""
+  });
+  const [searchType, setSearchType] = useState("flightNumber");
+  const [flightStatusQuery, setFlightStatusQuery] = useState("");
+  
+  const recentBookings = [
+    { 
+      pnr: "ABC123", 
+      flight: "AI-101", 
+      date: "15 Aug 2023", 
+      route: "DEL → BOM",
+      status: "Confirmed",
+      passengers: 2
     },
-    {
-      quote: "Location-based hotel recommendations were spot on. Saved me hours of research!",
-      author: "Michael T.",
-      rating: 4
-    },
-    {
-      quote: "Changed my flight last minute with zero hassle. Amazing service!",
-      author: "Priya K.",
-      rating: 5
+    { 
+      pnr: "XYZ456", 
+      flight: "AI-202", 
+      date: "20 Aug 2023", 
+      route: "BOM → GOI",
+      status: "Checked-in",
+      passengers: 1
     }
   ];
 
-  const getLocation = () => {
-    setIsLoadingLocation(true);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-          setIsLoadingLocation(false);
-        },
-        (error) => {
-          console.error("Error getting location:", error);
-          setIsLoadingLocation(false);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-      setIsLoadingLocation(false);
+  const upcomingTrips = [
+    {
+      date: "25 Aug 2023",
+      route: "DEL → JAI",
+      flight: "AI-305",
+      time: "08:45 - 10:15",
+      terminal: "T3"
     }
+  ];
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  useEffect(() => {
-    const today = new Date();
-    const tomorrow = new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    
-    setDepartureDate(today.toISOString().split('T')[0]);
-    setReturnDate(tomorrow.toISOString().split('T')[0]);
-
-    // Load recent searches from localStorage
-    const savedSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
-    setRecentSearches(savedSearches);
-  }, []);
-
-  const handleSearch = (e) => {
+  const handleManageSubmit = (e) => {
     e.preventDefault();
-    let searchData = {};
-    
-    if (activeTab === 'flights') {
-      searchData = {
-        type: 'flight',
-        tripType,
-        location,
-        departureDate,
-        returnDate: tripType === 'roundtrip' ? returnDate : null,
-        passengers,
-        destination,
-        timestamp: new Date().toISOString()
-      };
-    } else if (activeTab === 'hotels') {
-      searchData = {
-        type: 'hotel',
-        destination,
-        checkIn: departureDate,
-        checkOut: returnDate,
-        guests: passengers,
-        timestamp: new Date().toISOString()
-      };
-    } else {
-      searchData = {
-        type: 'booking',
-        reference: bookingRef,
-        timestamp: new Date().toISOString()
-      };
+    if (formData.pnr && formData.lastName) {
+      navigate(`/manage-booking?pnr=${formData.pnr}&lastName=${formData.lastName}`);
     }
-    
-    // Save to recent searches
-    const updatedSearches = [searchData, ...recentSearches].slice(0, 5);
-    setRecentSearches(updatedSearches);
-    localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
-    
-    alert(`Searching for ${activeTab} to ${destination || bookingRef || 'your destination'}`);
   };
 
-  const handleDestinationSelect = (dest) => {
-    setDestination(dest.name);
-    setShowLocationDropdown(false);
+  const handleCheckInSubmit = (e) => {
+    e.preventDefault();
+    if (formData.flightNumber && formData.lastName) {
+      navigate(`/prepare?flight=${formData.flightNumber}&lastName=${formData.lastName}`);
+    }
   };
 
-  const renderStars = (rating) => {
-    return Array(5).fill(0).map((_, i) => (
-      <FiStar 
-        key={i} 
-        className={`star ${i < rating ? 'filled' : ''}`} 
-      />
-    ));
+  const handleFlightStatusSubmit = (e) => {
+    e.preventDefault();
+    if (flightStatusQuery) {
+      navigate(`/schedule?query=${flightStatusQuery}&type=${searchType}`);
+    }
   };
+
+  const services = [
+    {
+      id: "book",
+      icon: <Search size={24} />,
+      title: "Book a Flight",
+      description: "Find and book your next journey with our wide network of domestic and international flights.",
+      action: "Search Flights",
+      route: "/ezbooking",
+      color: "#3b82f6"
+    },
+    {
+      id: "manage",
+      icon: <Edit size={24} />,
+      title: "Manage Booking",
+      description: "Modify seats, add baggage, or cancel your existing reservation.",
+      action: "Retrieve Booking",
+      route: "/manage-booking",
+      color: "#10b981"
+    },
+    {
+      id: "checkin",
+      icon: <CheckCircle size={24} />,
+      title: "Web Check-in",
+      description: "Check-in online and save time at the airport. Available 48 hours to 1 hour before departure.",
+      action: "Check-in Now",
+      route: "/prepare",
+      color: "#f59e0b"
+    },
+    {
+      id: "status",
+      icon: <Clock size={24} />,
+      title: "Flight Status",
+      description: "Get real-time updates about your flight's schedule and gate information.",
+      action: "Check Status",
+      route: "/schedule",
+      color: "#8b5cf6"
+    }
+  ];
+
+  const quickActions = [
+    {
+      icon: <Plane size={20} />,
+      title: "Flight Schedule",
+      route: "/schedule",
+      desc: "View all flight timings"
+    },
+    {
+      icon: <Ticket size={20} />,
+      title: "My Bookings",
+      route: "/manage-booking",
+      desc: "View all your bookings"
+    },
+    {
+      icon: <Luggage size={20} />,
+      title: "Baggage",
+      route: "/baggage-info",
+      desc: "Baggage rules & fees"
+    },
+    {
+      icon: <User size={20} />,
+      title: "Profile",
+      route: "/signin",
+      desc: "Manage your account"
+    },
+    {
+      icon: <CreditCard size={20} />,
+      title: "Payment",
+      route: "/payment",
+      desc: "Payment options"
+    },
+    {
+      icon: <MapPin size={20} />,
+      title: "Airport Info",
+      route: "/airport-info",
+      desc: "Terminal maps & services"
+    }
+  ];
 
   return (
-    <div className="book-manage-container">
-      {/* Hero Section */}
-      <div className="hero-section">
-        <div className="hero-content">
-          <h1>Discover Your Next Adventure</h1>
-          <p>Book flights, hotels, and manage your trips with our smart travel planner</p>
+    <div className="book-manage-section">
+      <div className="book-manage-container">
+        <div className="book-manage-header">
+          <div className="welcome-banner">
+            <h1>Welcome back, Traveler!</h1>
+            <p className="subtitle">
+              Everything you need to plan, book, and manage your flights in one place
+            </p>
+          </div>
+          
+          {upcomingTrips.length > 0 && (
+            <div className="upcoming-trip-card">
+              <div className="trip-header">
+                <h3><Plane size={20} /> Upcoming Trip</h3>
+                <span className="trip-date">{upcomingTrips[0].date}</span>
+              </div>
+              <div className="trip-details">
+                <div className="route">
+                  <span className="airports">{upcomingTrips[0].route}</span>
+                  <span className="flight-number">{upcomingTrips[0].flight}</span>
+                </div>
+                <div className="timing">
+                  <span>{upcomingTrips[0].time}</span>
+                  <span>Terminal {upcomingTrips[0].terminal}</span>
+                </div>
+              </div>
+              <button 
+                className="action-btn outline"
+                onClick={() => navigate(`/manage-booking?flight=${upcomingTrips[0].flight}`)}
+              >
+                View Details <ChevronRight size={16} />
+              </button>
+            </div>
+          )}
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="main-content">
-        {/* Search Section */}
         <div className="tabs-container">
           <div className="tabs">
-            <button 
-              className={`tab ${activeTab === 'flights' ? 'active' : ''}`}
-              onClick={() => setActiveTab('flights')}
-            >
-              <FiSearch className="tab-icon" /> Flights
-            </button>
-            <button 
-              className={`tab ${activeTab === 'hotels' ? 'active' : ''}`}
-              onClick={() => setActiveTab('hotels')}
-            >
-              <FiCheckCircle className="tab-icon" /> Hotels
-            </button>
-            <button 
-              className={`tab ${activeTab === 'manage' ? 'active' : ''}`}
-              onClick={() => setActiveTab('manage')}
-            >
-              <FiEdit className="tab-icon" /> Manage Trips
-            </button>
-          </div>
-
-          <div className="search-container">
-            <form onSubmit={handleSearch}>
-              {activeTab === 'flights' && (
-                <>
-                  <div className="trip-type-selector">
-                    <button 
-                      type="button"
-                      className={`trip-type ${tripType === 'roundtrip' ? 'active' : ''}`}
-                      onClick={() => setTripType('roundtrip')}
-                    >
-                      Round Trip
-                    </button>
-                    <button 
-                      type="button"
-                      className={`trip-type ${tripType === 'oneway' ? 'active' : ''}`}
-                      onClick={() => setTripType('oneway')}
-                    >
-                      One Way
-                    </button>
-                  </div>
-
-                  <div className="input-row">
-                    <div className="input-group">
-                      <label>
-                        <FiMapPin className="input-icon" /> From
-                        <div className="location-input-container">
-                          <input 
-                            type="text" 
-                            placeholder="City or Airport" 
-                            value={location ? "Your Location" : ""}
-                            readOnly
-                            className="location-input"
-                          />
-                          <button 
-                            type="button" 
-                            className="location-btn"
-                            onClick={getLocation}
-                            disabled={isLoadingLocation}
-                          >
-                            {isLoadingLocation ? (
-                              <span className="spinner"></span>
-                            ) : (
-                              <FiNavigation className="location-icon" />
-                            )}
-                          </button>
-                        </div>
-                      </label>
-                    </div>
-
-                    <div className="input-group">
-                      <label>
-                        <FiMapPin className="input-icon" /> To
-                        <div className="destination-input-container">
-                          <input 
-                            type="text" 
-                            placeholder="Destination" 
-                            value={destination}
-                            onChange={(e) => setDestination(e.target.value)}
-                            onFocus={() => setShowLocationDropdown(true)}
-                            onBlur={() => setTimeout(() => setShowLocationDropdown(false), 200)}
-                            required
-                          />
-                          {showLocationDropdown && (
-                            <div className="destination-dropdown">
-                              <div className="dropdown-header">Popular Destinations</div>
-                              {popularDestinations.map((dest) => (
-                                <div 
-                                  key={dest.code} 
-                                  className="dropdown-item"
-                                  onClick={() => handleDestinationSelect(dest)}
-                                >
-                                  <div className="destination-image" style={{backgroundImage: `url(${dest.image})`}}></div>
-                                  <div className="destination-info">
-                                    <div className="destination-name">{dest.name}</div>
-                                    <div className="destination-code">{dest.code}</div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="input-row">
-                    <div className="input-group">
-                      <label>
-                        <FiCalendar className="input-icon" /> Departure
-                        <input 
-                          type="date" 
-                          value={departureDate}
-                          onChange={(e) => setDepartureDate(e.target.value)}
-                          required
-                          min={new Date().toISOString().split('T')[0]}
-                        />
-                      </label>
-                    </div>
-
-                    {tripType === 'roundtrip' && (
-                      <div className="input-group">
-                        <label>
-                          <FiCalendar className="input-icon" /> Return
-                          <input 
-                            type="date" 
-                            value={returnDate}
-                            onChange={(e) => setReturnDate(e.target.value)}
-                            required={tripType === 'roundtrip'}
-                            min={departureDate}
-                          />
-                        </label>
-                      </div>
-                    )}
-
-                    <div className="input-group passengers-group">
-                      <label>
-                        <FiUsers className="input-icon" /> Passengers
-                        <div className="passengers-select">
-                          <select 
-                            value={passengers}
-                            onChange={(e) => setPassengers(parseInt(e.target.value))}
-                          >
-                            {[1, 2, 3, 4, 5, 6].map(num => (
-                              <option key={num} value={num}>{num} {num === 1 ? 'person' : 'people'}</option>
-                            ))}
-                          </select>
-                          <FiChevronDown className="chevron-icon" />
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {activeTab === 'hotels' && (
-                <>
-                  <div className="input-row">
-                    <div className="input-group">
-                      <label>
-                        <FiMapPin className="input-icon" /> Destination
-                        <input 
-                          type="text" 
-                          placeholder="City or Hotel" 
-                          value={destination}
-                          onChange={(e) => setDestination(e.target.value)}
-                          required
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  <div className="input-row">
-                    <div className="input-group">
-                      <label>
-                        <FiCalendar className="input-icon" /> Check-in
-                        <input 
-                          type="date" 
-                          value={departureDate}
-                          onChange={(e) => setDepartureDate(e.target.value)}
-                          required
-                          min={new Date().toISOString().split('T')[0]}
-                        />
-                      </label>
-                    </div>
-
-                    <div className="input-group">
-                      <label>
-                        <FiCalendar className="input-icon" /> Check-out
-                        <input 
-                          type="date" 
-                          value={returnDate}
-                          onChange={(e) => setReturnDate(e.target.value)}
-                          required
-                          min={departureDate}
-                        />
-                      </label>
-                    </div>
-
-                    <div className="input-group passengers-group">
-                      <label>
-                        <FiUsers className="input-icon" /> Guests
-                        <div className="passengers-select">
-                          <select 
-                            value={passengers}
-                            onChange={(e) => setPassengers(parseInt(e.target.value))}
-                          >
-                            {[1, 2, 3, 4, 5, 6].map(num => (
-                              <option key={num} value={num}>{num} {num === 1 ? 'guest' : 'guests'}</option>
-                            ))}
-                          </select>
-                          <FiChevronDown className="chevron-icon" />
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </>
-              )}
-
-              {activeTab === 'manage' && (
-                <div className="input-row">
-                  <div className="input-group full-width">
-                    <label>
-                      <FiSearch className="input-icon" /> Booking Reference
-                      <input 
-                        type="text" 
-                        placeholder="Enter PNR or Booking ID" 
-                        value={bookingRef}
-                        onChange={(e) => setBookingRef(e.target.value)}
-                        required 
-                      />
-                    </label>
-                  </div>
-                </div>
-              )}
-
-              <button type="submit" className="search-btn">
-                <FiSearch className="search-icon" /> 
-                {activeTab === 'flights' && (
-                  tripType === 'roundtrip' ? 'Search Flights' : 'Find One-Way Flights'
-                )}
-                {activeTab === 'hotels' && 'Find Hotels'}
-                {activeTab === 'manage' && 'Find Booking'}
+            {services.map((service) => (
+              <button
+                key={service.id}
+                className={`tab-btn ${activeTab === service.id ? "active" : ""}`}
+                onClick={() => setActiveTab(service.id)}
+                style={{ borderBottomColor: service.color }}
+              >
+                <span className="tab-icon" style={{ color: service.color }}>
+                  {service.icon}
+                </span>
+                {service.title}
               </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Recent Searches */}
-        {recentSearches.length > 0 && (
-          <div className="recent-searches">
-            <h2>Your Recent Searches</h2>
-            <div className="searches-grid">
-              {recentSearches.map((search, index) => (
-                <div key={index} className="search-card">
-                  <div className="search-type">{search.type}</div>
-                  <div className="search-destination">
-                    {search.destination || search.reference || 'Your location'}
-                  </div>
-                  <div className="search-dates">
-                    {search.departureDate || search.checkIn} 
-                    {search.returnDate && ` - ${search.returnDate}`}
-                    {search.checkOut && ` - ${search.checkOut}`}
-                  </div>
-                  <button className="search-again-btn">
-                    <FiSearch /> Search Again
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Popular Destinations */}
-        <div className="popular-destinations">
-          <h2>Popular Destinations</h2>
-          <div className="destinations-grid">
-            {popularDestinations.map((dest) => (
-              <div key={dest.code} className="destination-card">
-                <div 
-                  className="destination-image" 
-                  style={{backgroundImage: `url(${dest.image})`}}
-                >
-                  <button className="favorite-btn">
-                    <FiHeart />
-                  </button>
-                </div>
-                <div className="destination-info">
-                  <h3>{dest.name}</h3>
-                  <div className="destination-code">{dest.code}</div>
-                </div>
-              </div>
             ))}
           </div>
-        </div>
 
-        {/* Features Section */}
-        <div className="features-section">
-          <h2>Why Book With Us?</h2>
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon real-time">
-                <FiClock />
+          <div className="tab-content">
+            {activeTab === "book" && (
+              <div className="service-content">
+                <div className="service-header">
+                  <span className="service-icon" style={{ backgroundColor: services[0].color }}>
+                    {services[0].icon}
+                  </span>
+                  <h2>{services[0].title}</h2>
+                </div>
+                <p className="service-description">{services[0].description}</p>
+                <button 
+                  className="action-btn primary"
+                  style={{ backgroundColor: services[0].color }}
+                  onClick={() => navigate(services[0].route)}
+                >
+                  {services[0].action} <ArrowRight size={18} />
+                </button>
+                
+                <div className="recent-bookings">
+                  <h3><Clock size={20} /> Your Recent Bookings</h3>
+                  {recentBookings.length > 0 ? (
+                    <div className="booking-cards">
+                      {recentBookings.map((booking, index) => (
+                        <div key={index} className="booking-card">
+                          <div className="booking-header">
+                            <span className="pnr">{booking.pnr}</span>
+                            <span className={`status ${booking.status.toLowerCase()}`}>
+                              {booking.status}
+                            </span>
+                          </div>
+                          <div className="booking-info">
+                            <div>
+                              <span className="flight">{booking.flight}</span>
+                              <span className="route">{booking.route}</span>
+                            </div>
+                            <div>
+                              <span className="date">{booking.date}</span>
+                              <span className="passengers">{booking.passengers} passenger(s)</span>
+                            </div>
+                          </div>
+                          <button 
+                            className="action-btn outline"
+                            onClick={() => navigate(`/manage-booking?pnr=${booking.pnr}`)}
+                          >
+                            View Details <ChevronRight size={16} />
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="no-bookings">
+                      <Info size={24} />
+                      <p>You don't have any recent bookings</p>
+                      <button 
+                        className="action-btn text"
+                        onClick={() => navigate(services[0].route)}
+                      >
+                        Book a flight now
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
-              <h3>Real-Time Tracking</h3>
-              <p>Live flight status and location-based alerts</p>
-            </div>
+            )}
 
-            <div className="feature-card">
-              <div className="feature-icon flexible">
-                <FiEdit />
+            {activeTab === "manage" && (
+              <div className="service-content">
+                <div className="service-header">
+                  <span className="service-icon" style={{ backgroundColor: services[1].color }}>
+                    {services[1].icon}
+                  </span>
+                  <h2>{services[1].title}</h2>
+                </div>
+                <p className="service-description">{services[1].description}</p>
+                
+                <form onSubmit={handleManageSubmit} className="service-form">
+                  <div className="form-group">
+                    <label htmlFor="pnr">PNR/Booking Reference</label>
+                    <div className="input-with-hint">
+                      <input
+                        type="text"
+                        id="pnr"
+                        name="pnr"
+                        value={formData.pnr}
+                        onChange={handleInputChange}
+                        placeholder="6-character code"
+                        required
+                      />
+                      <span className="hint">e.g. ABC123</span>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="As on booking"
+                      required
+                    />
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="action-btn primary"
+                    style={{ backgroundColor: services[1].color }}
+                  >
+                    {services[1].action} <ArrowRight size={18} />
+                  </button>
+                </form>
+                
+                <div className="form-footer">
+                  <ShieldCheck size={16} />
+                  <span>Your booking information is secure and encrypted</span>
+                </div>
               </div>
-              <h3>Flexible Changes</h3>
-              <p>Modify bookings with no fees</p>
-            </div>
+            )}
 
-            <div className="feature-card">
-              <div className="feature-icon secure">
-                <FiCheckCircle />
+            {activeTab === "checkin" && (
+              <div className="service-content">
+                <div className="service-header">
+                  <span className="service-icon" style={{ backgroundColor: services[2].color }}>
+                    {services[2].icon}
+                  </span>
+                  <h2>{services[2].title}</h2>
+                </div>
+                <p className="service-description">{services[2].description}</p>
+                
+                <form onSubmit={handleCheckInSubmit} className="service-form">
+                  <div className="form-group">
+                    <label htmlFor="flightNumber">Flight Number</label>
+                    <div className="input-with-hint">
+                      <input
+                        type="text"
+                        id="flightNumber"
+                        name="flightNumber"
+                        value={formData.flightNumber}
+                        onChange={handleInputChange}
+                        placeholder="e.g. AI-101"
+                        required
+                      />
+                      <span className="hint">Find on your ticket</span>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="lastName">Last Name</label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      name="lastName"
+                      value={formData.lastName}
+                      onChange={handleInputChange}
+                      placeholder="As on ticket"
+                      required
+                    />
+                  </div>
+                  <button 
+                    type="submit" 
+                    className="action-btn primary"
+                    style={{ backgroundColor: services[2].color }}
+                  >
+                    {services[2].action} <ArrowRight size={18} />
+                  </button>
+                </form>
+                
+                <div className="checkin-tips">
+                  <h4>Check-in Tips</h4>
+                  <ul>
+                    <li>Check-in opens 48 hours before departure</li>
+                    <li>Have your passport/ID ready for international flights</li>
+                    <li>Print or download your boarding pass</li>
+                  </ul>
+                </div>
               </div>
-              <h3>Secure Payments</h3>
-              <p>256-bit encrypted transactions</p>
-            </div>
+            )}
 
-            <div className="feature-card">
-              <div className="feature-icon support">
-                <FiUsers />
+            {activeTab === "status" && (
+              <div className="service-content">
+                <div className="service-header">
+                  <span className="service-icon" style={{ backgroundColor: services[3].color }}>
+                    {services[3].icon}
+                  </span>
+                  <h2>{services[3].title}</h2>
+                </div>
+                <p className="service-description">{services[3].description}</p>
+                
+                <form onSubmit={handleFlightStatusSubmit} className="flight-status-form">
+                  <div className="form-group">
+                    <label>Search by:</label>
+                    <div className="search-options">
+                      <button 
+                        type="button"
+                        className={`search-option ${searchType === "flightNumber" ? "active" : ""}`}
+                        onClick={() => setSearchType("flightNumber")}
+                      >
+                        Flight Number
+                      </button>
+                      <button 
+                        type="button"
+                        className={`search-option ${searchType === "route" ? "active" : ""}`}
+                        onClick={() => setSearchType("route")}
+                      >
+                        Route
+                      </button>
+                      <button 
+                        type="button"
+                        className={`search-option ${searchType === "date" ? "active" : ""}`}
+                        onClick={() => setSearchType("date")}
+                      >
+                        Date
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      value={flightStatusQuery}
+                      onChange={(e) => setFlightStatusQuery(e.target.value)}
+                      placeholder={
+                        searchType === "flightNumber" ? "Enter flight number (e.g. AI-101)" :
+                        searchType === "route" ? "Enter route (e.g. DEL-BOM)" :
+                        "Enter date (e.g. 15 Aug 2023)"
+                      }
+                      required
+                    />
+                  </div>
+                  
+                  <button 
+                    type="submit"
+                    className="action-btn primary"
+                    style={{ backgroundColor: services[3].color }}
+                  >
+                    {services[3].action} <ArrowRight size={18} />
+                  </button>
+                </form>
+                
+                <div className="flight-status-info">
+                  <h4>Popular Flights Status</h4>
+                  <div className="status-cards">
+                    <div className="status-card">
+                      <span className="flight">AI-101</span>
+                      <span className="route">DEL → BOM</span>
+                      <span className="status on-time">On Time</span>
+                      <span className="time">Departs 14:30</span>
+                    </div>
+                    <div className="status-card">
+                      <span className="flight">AI-202</span>
+                      <span className="route">BOM → GOI</span>
+                      <span className="status delayed">Delayed</span>
+                      <span className="time">Now 16:45</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <h3>24/7 Support</h3>
-              <p>Dedicated customer service team</p>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* Testimonials */}
-        <div className="testimonial-section">
-          <h2>What Our Customers Say</h2>
-          <div className="testimonials-grid">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card">
-                <div className="testimonial-rating">
-                  {renderStars(testimonial.rating)}
+        <div className="quick-actions">
+          <h3>Quick Actions</h3>
+          <div className="action-grid">
+            {quickActions.map((action, index) => (
+              <div 
+                key={index} 
+                className="action-card"
+                onClick={() => navigate(action.route)}
+              >
+                <div className="action-icon" style={{ backgroundColor: `rgba(${hexToRgb(services[index % services.length].color)}, 0.1)` }}>
+                  {action.icon}
                 </div>
-                <div className="testimonial-content">
-                  "{testimonial.quote}"
+                <div className="action-text">
+                  <span className="action-title">{action.title}</span>
+                  <span className="action-desc">{action.desc}</span>
                 </div>
-                <div className="testimonial-author">- {testimonial.author}</div>
+                <ChevronRight size={18} className="action-arrow" />
               </div>
             ))}
           </div>
@@ -510,6 +491,14 @@ function BookManage() {
       </div>
     </div>
   );
+}
+
+// Helper function to convert hex to rgb
+function hexToRgb(hex) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `${r}, ${g}, ${b}`;
 }
 
 export default BookManage;

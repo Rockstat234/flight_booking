@@ -61,6 +61,7 @@ export default function App() {
           Your browser does not support the video tag.
         </video>
         <div className="hero-content">
+          <center></center>
           <h1>EXPERIENCE THE BHARAT YATRA</h1>
           <p>Fly with India's premier airline</p>
           <button className="cta-button">Book Your Flight</button>

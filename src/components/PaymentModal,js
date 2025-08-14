@@ -1,0 +1,42 @@
+import React, { useState } from "react";
+
+export default function PaymentModal({ open, onClose, onPay, ticket, busy }){
+  const [method, setMethod] = useState("upi");
+
+  if(!open) return null;
+  return (
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal" onClick={(e)=>e.stopPropagation()}>
+        <div className="title">Payment Summary</div>
+        <div className="helper">Confirm & pay for your ticket.</div>
+
+        <div className="card" style={{padding:12, marginTop:10}}>
+          <div style={{fontWeight:700}}>{ticket.airline} – {ticket.flightNumber}</div>
+          <div className="helper">{ticket.from} → {ticket.to} • {ticket.travelClass}</div>
+          <div style={{marginTop:6,fontWeight:800,fontSize:18}}>Total: ₹{Number(ticket.price).toLocaleString()}</div>
+        </div>
+
+        <div className="mt">
+          <label className="helper">Payment Method</label>
+          <div className="row mt">
+            {["credit","debit","upi","netbanking"].map(m => (
+              <button key={m}
+                className={`btn ${method===m ? "" : "secondary"}`}
+                onClick={()=>setMethod(m)}>
+                {m==="upi" ? "UPI" : m==="credit" ? "Credit" : m==="debit" ? "Debit" : "Netbanking"}
+              </button>
+            ))}
+          </div>
+          <div className="note mt">Demo payment — actual card/UPI details नकोत.</div>
+        </div>
+
+        <div className="row mt">
+          <button className="btn secondary" onClick={onClose} disabled={busy}>Cancel</button>
+          <button className="btn" onClick={()=>onPay(method)} disabled={busy}>
+            {busy ? <span className="loader" /> : "Pay Now"}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -37,8 +37,10 @@ const Navbar = () => {
           <ul className="utility-links">
             <li><Link to="/tariff"><i className="fas fa-tag"></i> TARIFF</Link></li>
             <li><Link to="/giftcard"><i className="fas fa-gift"></i> GIFTCARD</Link></li>
-            <li><Link to="/search"><i className="fas fa-search"></i> Q SEARCH</Link></li>
+            <li><Link to="/search"><i className="fas fa-search"></i>  SEARCH</Link></li>
             <li><Link to="/support"><i className="fas fa-headset"></i> SUPPORT</Link></li>
+            <li><Link to="/flights"><i className="fas fa-plane"></i> FLIGHTS</Link></li>
+
             <li className="sign-in"><Link to="/signin"><i className="fas fa-user-circle"></i> SIGN IN</Link></li>
           </ul>
         </div>
@@ -75,7 +77,7 @@ const Navbar = () => {
               <li><Link to="/book-manage"><i className="fas fa-calendar-alt"></i> BOOK & MANAGE</Link></li>
               <li><Link to="/wherewefly"><i className="fas fa-map-marked-alt"></i> WHERE WE FLY</Link></li>
               <li><Link to="/prepare"><i className="fas fa-suitcase"></i> PREPARE TO TRAVEL</Link></li>
-              <li className="nav-featured"><Link to="/experience"><i className="fas fa-star"></i> BHARAT YATRA EXPERIENCE</Link></li>
+              <li className="nav-featured"><Link to="/HotelBooking"><i className="fas fa-star"></i> HOTEL</Link></li>
               <li className="nav-premium"><Link to="/maharajaclub"><i className="fas fa-crown"></i> MAHARAJA CLUB</Link></li>
             </ul>
           </nav>
