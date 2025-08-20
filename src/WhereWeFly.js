@@ -14,9 +14,7 @@ const WhereWeFly = () => {
       distance: "11,800 km",
       flightDuration: "15-17 hrs",
       price: "₹45,000",
-      description: "The city that never sleeps with iconic landmarks like Times Square and Statue of Liberty",
-      highlights: ["Statue of Liberty", "Central Park", "Broadway shows"],
-      bestTime: "April-June, September-November"
+      description: "The city that never sleeps with iconic landmarks like Times Square and Statue of Liberty"
     },
     {
       id: 2,
@@ -26,9 +24,7 @@ const WhereWeFly = () => {
       distance: "6,700 km",
       flightDuration: "8-9 hrs",
       price: "₹35,000",
-      description: "Historic capital with Buckingham Palace and the London Eye",
-      highlights: ["Buckingham Palace", "London Eye", "Tower Bridge"],
-      bestTime: "May-September"
+      description: "Historic capital with Buckingham Palace and the London Eye"
     },
     {
       id: 3,
@@ -38,9 +34,7 @@ const WhereWeFly = () => {
       distance: "5,800 km",
       flightDuration: "7-8 hrs",
       price: "₹38,000",
-      description: "Vibrant metropolis blending tradition and cutting-edge technology",
-      highlights: ["Shibuya Crossing", "Tokyo Skytree", "Senso-ji Temple"],
-      bestTime: "March-May, September-November"
+      description: "Vibrant metropolis blending tradition and cutting-edge technology"
     },
     {
       id: 4,
@@ -50,9 +44,7 @@ const WhereWeFly = () => {
       distance: "6,700 km",
       flightDuration: "8-9 hrs",
       price: "₹42,000",
-      description: "Romantic city of lights with the Eiffel Tower and Louvre",
-      highlights: ["Eiffel Tower", "Louvre Museum", "Notre-Dame Cathedral"],
-      bestTime: "April-June, September-October"
+      description: "Romantic city of lights with the Eiffel Tower and Louvre"
     },
     {
       id: 5,
@@ -62,9 +54,7 @@ const WhereWeFly = () => {
       distance: "2,200 km",
       flightDuration: "3-4 hrs",
       price: "₹18,000",
-      description: "Ultra-modern desert city with Burj Khalifa and Palm Islands",
-      highlights: ["Burj Khalifa", "Desert Safari", "Dubai Mall"],
-      bestTime: "November-March"
+      description: "Ultra-modern desert city with Burj Khalifa and Palm Islands"
     },
     {
       id: 6,
@@ -74,9 +64,7 @@ const WhereWeFly = () => {
       distance: "3,900 km",
       flightDuration: "5-6 hrs",
       price: "₹25,000",
-      description: "Garden city with futuristic architecture and diverse culture",
-      highlights: ["Marina Bay Sands", "Gardens by the Bay", "Sentosa Island"],
-      bestTime: "February-April"
+      description: "Garden city with futuristic architecture and diverse culture"
     },
     {
       id: 7,
@@ -86,9 +74,7 @@ const WhereWeFly = () => {
       distance: "2,500 km",
       flightDuration: "3-4 hrs",
       price: "₹20,000",
-      description: "Vibrant city known for temples, street food and nightlife",
-      highlights: ["Grand Palace", "Chatuchak Market", "Wat Arun"],
-      bestTime: "November-February"
+      description: "Vibrant city known for temples, street food and nightlife"
     },
     {
       id: 8,
@@ -98,57 +84,7 @@ const WhereWeFly = () => {
       distance: "4,200 km",
       flightDuration: "6-7 hrs",
       price: "₹30,000",
-      description: "Crossroads of Europe and Asia with rich history",
-      highlights: ["Hagia Sophia", "Blue Mosque", "Grand Bazaar"],
-      bestTime: "April-May, September-October"
-    },
-    {
-      id: 9,
-      city: "Rome",
-      country: "Italy",
-      image: "/images/rome.jpg",
-      distance: "5,800 km",
-      flightDuration: "8-9 hrs",
-      price: "₹40,000",
-      description: "Eternal city with ancient ruins and Renaissance art",
-      highlights: ["Colosseum", "Vatican City", "Trevi Fountain"],
-      bestTime: "April-June, September-October"
-    },
-    {
-      id: 10,
-      city: "Sydney",
-      country: "Australia",
-      image: "/images/sydney.jpg",
-      distance: "10,500 km",
-      flightDuration: "12-14 hrs",
-      price: "₹50,000",
-      description: "Stunning harbor city with the Opera House and Bondi Beach",
-      highlights: ["Sydney Opera House", "Bondi Beach", "Harbour Bridge"],
-      bestTime: "September-November, March-May"
-    },
-    {
-      id: 11,
-      city: "Cape Town",
-      country: "South Africa",
-      image: "/images/capetown.jpg",
-      distance: "8,900 km",
-      flightDuration: "10-11 hrs",
-      price: "₹48,000",
-      description: "Stunning coastal city with Table Mountain and vineyards",
-      highlights: ["Table Mountain", "Robben Island", "Cape Point"],
-      bestTime: "November-February"
-    },
-    {
-      id: 12,
-      city: "Toronto",
-      country: "Canada",
-      image: "/images/toronto.jpg",
-      distance: "11,500 km",
-      flightDuration: "14-16 hrs",
-      price: "₹52,000",
-      description: "Cosmopolitan city with CN Tower and Niagara Falls nearby",
-      highlights: ["CN Tower", "Niagara Falls", "Royal Ontario Museum"],
-      bestTime: "May-September"
+      description: "Crossroads of Europe and Asia with rich history"
     }
   ];
 
@@ -160,12 +96,12 @@ const WhereWeFly = () => {
 
   return (
     <div className="where-we-fly">
-      <div className="hero-section">
+      <div className="hero-banner">
         <h1>Where We Fly</h1>
         <p>Discover our global network of premium destinations</p>
       </div>
 
-      <div className="destination-grid">
+      <div className="destinations-container">
         {destinations.map((destination) => (
           <div className="destination-card" key={destination.id}>
             <div className="card-image">
@@ -173,13 +109,13 @@ const WhereWeFly = () => {
                 src={process.env.PUBLIC_URL + destination.image} 
                 alt={`${destination.city}, ${destination.country}`}
               />
-              <div className="price-badge">{destination.price}</div>
-              <div className="city-overlay">
+              <div className="city-label">
                 <h3>{destination.city}</h3>
                 <p>{destination.country}</p>
               </div>
             </div>
-            <div className="card-content">
+            
+            <div className="card-details">
               <div className="flight-info">
                 <div className="info-item">
                   <span className="label">Distance:</span>
@@ -189,13 +125,19 @@ const WhereWeFly = () => {
                   <span className="label">Flight Time:</span>
                   <span>{destination.flightDuration}</span>
                 </div>
+                <div className="info-item">
+                  <span className="label">Price From:</span>
+                  <span className="price">{destination.price}</span>
+                </div>
               </div>
+              
+              <p className="description">{destination.description}</p>
+              
               <button 
                 className="explore-btn"
                 onClick={() => handleExploreClick(destination)}
               >
                 Explore Destination
-                <span className="arrow">→</span>
               </button>
             </div>
           </div>

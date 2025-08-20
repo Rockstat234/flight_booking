@@ -39,7 +39,7 @@ const Navbar = () => {
             <li><Link to="/giftcard"><i className="fas fa-gift"></i> GIFTCARD</Link></li>
             <li><Link to="/search"><i className="fas fa-search"></i>  SEARCH</Link></li>
             <li><Link to="/support"><i className="fas fa-headset"></i> SUPPORT</Link></li>
-            <li><Link to="/flights"><i className="fas fa-plane"></i> FLIGHTS</Link></li>
+        
 
             <li className="sign-in"><Link to="/signin"><i className="fas fa-user-circle"></i> SIGN IN</Link></li>
           </ul>

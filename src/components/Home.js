@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 const services = [
@@ -10,21 +10,25 @@ const services = [
   },
   { 
     title: "Maharaja Club", 
+    desc: "Elite Membership",
     img: "/images/maharaja.jpg",
     backContent: "Exclusive benefits including lounge access, priority boarding, and extra baggage allowance."
   },
   { 
     title: "Star Alliance", 
+    desc: "Global Network",
     img: "/images/star-alliance.jpg",
     backContent: "Access to a global network of airlines with seamless connections worldwide."
   },
   { 
     title: "E-Store", 
+    desc: "Official Merchandise",
     img: "/images/estore.jpg",
-    backContent: "Shop exclusive Air India merchandise and collectibles online."
+    backContent: "Shop exclusive Bharat Yatra merchandise and collectibles online."
   },
   { 
     title: "Talk to Us", 
+    desc: "24/7 Support",
     img: "/images/talktous.jpg",
     backContent: "24/7 customer support for all your travel queries and assistance."
   },
@@ -33,7 +37,7 @@ const services = [
 const prepareToTravel = [
   {
     title: "Baggage Essentials",
-    desc: "Travel light on worries and heavy on information. Baggage rules decoded.",
+    desc: "Travel light on worries and heavy on information",
     img: "/images/baggage.jpg",
     backContent: "Learn about baggage allowances, restricted items, and packing tips for stress-free travel."
   },
@@ -52,8 +56,23 @@ const prepareToTravel = [
 ];
 
 export default function App() {
+  const [activeCard, setActiveCard] = useState(null);
+  const [flippedCards, setFlippedCards] = useState([]);
+
+  const toggleCard = (index, section) => {
+    if (section === 'services') {
+      setActiveCard(activeCard === index ? null : index);
+    } else {
+      if (flippedCards.includes(index)) {
+        setFlippedCards(flippedCards.filter(i => i !== index));
+      } else {
+        setFlippedCards([...flippedCards, index]);
+      }
+    }
+  };
+
   return (
-    <div className="air-india-app">
+    <div className="bharat-yatra-app">
       {/* Hero Section */}
       <section className="hero">
         <video autoPlay muted loop playsInline className="hero-video">
@@ -61,10 +80,12 @@ export default function App() {
           Your browser does not support the video tag.
         </video>
         <div className="hero-content">
-          <center></center>
           <h1>EXPERIENCE THE BHARAT YATRA</h1>
           <p>Fly with India's premier airline</p>
-          <button className="cta-button">Book Your Flight</button>
+          <div className="cta-container">
+            <button className="cta-button">Book Your Flight</button>
+            <button className="cta-button secondary">Explore Destinations</button>
+          </div>
         </div>
       </section>
 
@@ -73,10 +94,15 @@ export default function App() {
         <div className="section-header">
           <h2>DISCOVER OUR SERVICES</h2>
           <div className="divider"></div>
+          <p className="section-subtitle">Premium services for an exceptional travel experience</p>
         </div>
         <div className="services-container">
           {services.map((service, index) => (
-            <div className="service-card" key={index}>
+            <div 
+              className={`service-card ${activeCard === index ? 'active' : ''}`} 
+              key={index}
+              onClick={() => toggleCard(index, 'services')}
+            >
               <div 
                 className="card-image" 
                 style={{ backgroundImage: `url(${service.img})` }}
@@ -99,10 +125,15 @@ export default function App() {
         <div className="section-header">
           <h2>PREPARE TO TRAVEL</h2>
           <div className="divider"></div>
+          <p className="section-subtitle">Essential information for your journey</p>
         </div>
         <div className="travel-cards">
           {prepareToTravel.map((item, index) => (
-            <div className="travel-card" key={index}>
+            <div 
+              className={`travel-card ${flippedCards.includes(index) ? 'flipped' : ''}`} 
+              key={index}
+              onClick={() => toggleCard(index, 'travel')}
+            >
               <div className="card-inner">
                 <div className="card-front">
                   <div 
@@ -112,9 +143,11 @@ export default function App() {
                   <div className="card-body">
                     <h3>{item.title}</h3>
                     <p>{item.desc}</p>
+                    <div className="flip-indicator">Click to learn more →</div>
                   </div>
                 </div>
                 <div className="card-back">
+                  <h3>{item.title}</h3>
                   <p>{item.backContent}</p>
                   <button className="card-button">
                     Details <span>→</span>
@@ -123,6 +156,18 @@ export default function App() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Newsletter Section */}
+      <section className="newsletter">
+        <div className="newsletter-content">
+          <h2>Stay Updated</h2>
+          <p>Subscribe to our newsletter for exclusive offers and travel updates</p>
+          <form className="newsletter-form">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">Subscribe</button>
+          </form>
         </div>
       </section>
     </div>

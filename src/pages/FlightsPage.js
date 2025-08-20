@@ -1,102 +1,60 @@
-// src/pages/FlightsPage.js
-import React, { useState } from "react";
-import { searchFlights, createBooking, payBooking } from "../api";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import BookingForm from "../components/BookingForm";
 
 export default function FlightsPage() {
-  const [formData, setFormData] = useState({});
-  const [tickets, setTickets] = useState([]);
-  const [message, setMessage] = useState("");
-  const [confirmationMessage, setConfirmationMessage] = useState("");
-  const [showForm, setShowForm] = useState(true);
-  const [selectedTicket, setSelectedTicket] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [showPayment, setShowPayment] = useState(false);
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [selectedFlight, setSelectedFlight] = useState(null);
 
-  // 🔎 Search flights
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setMessage("");
-    setConfirmationMessage("");
-    try {
-      const { count, flights } = await searchFlights(formData);
-      setTickets(flights);
-      setMessage(`We found ${count} flights for you!`);
-      setShowForm(false);
-    } catch (err) {
-      console.error(err);
-      setMessage("Failed to fetch flights. Please check backend (8000) & try again.");
-    }
-  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/flights")
+      .then((res) => {
+        setFlights(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("❌ Flights fetch error:", err.message);
+        setError("Failed to fetch flights");
+        setLoading(false);
+      });
+  }, []);
 
-  // 🧾 Book ticket
-  const handleBookTicket = async (id) => {
-    const t = tickets.find((x) => x.id === id);
-    try {
-      const { booking } = await createBooking(t);
-      setSelectedTicket({ ...t, _dbId: booking._id });
-      setShowPayment(true);
-    } catch (e) {
-      console.error(e);
-      setMessage("Booking failed. Please try again.");
-    }
-  };
-
-  // 💳 Payment
-  const handlePaymentSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { booking } = await payBooking(selectedTicket._dbId, paymentMethod);
-      setConfirmationMessage(
-        `Booking confirmed with ${selectedTicket.airline}! Txn: ${booking.payment.txnId}`
-      );
-      setShowPayment(false);
-      setTimeout(() => setConfirmationMessage(""), 5000);
-    } catch (err) {
-      console.error(err);
-      setConfirmationMessage("Payment failed. Please try again.");
-    }
-  };
+  if (loading) return <p className="text-center">Loading flights...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
 
   return (
-    <div>
-      <h1>Flights Booking</h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Available Flights</h1>
 
-      {showForm && (
-        <form onSubmit={handleSubmit}>
-          <input
-            placeholder="From"
-            onChange={(e) => setFormData({ ...formData, from: e.target.value })}
-          />
-          <input
-            placeholder="To"
-            onChange={(e) => setFormData({ ...formData, to: e.target.value })}
-          />
-          <button type="submit">Search Flights</button>
-        </form>
-      )}
-
-      {message && <p>{message}</p>}
-
-      {tickets.length > 0 &&
-        tickets.map((t) => (
-          <div key={t.id}>
-            <p>{t.airline} — {t.price}₹</p>
-            <button onClick={() => handleBookTicket(t.id)}>Book</button>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {flights.map((flight) => (
+          <div
+            key={flight._id}
+            className="border rounded-lg p-4 shadow hover:shadow-lg transition"
+          >
+            <h2 className="text-xl font-semibold">
+              {flight.from} → {flight.to}
+            </h2>
+            <p>Departure: {new Date(flight.departure).toLocaleString()}</p>
+            <p>Price: ₹{flight.price}</p>
+            <button
+              className="mt-2 px-4 py-2 bg-blue-600 text-white rounded"
+              onClick={() => setSelectedFlight(flight)}
+            >
+              Book Now
+            </button>
           </div>
         ))}
+      </div>
 
-      {showPayment && (
-        <form onSubmit={handlePaymentSubmit}>
-          <input
-            placeholder="Payment Method"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          />
-          <button type="submit">Pay</button>
-        </form>
+      {selectedFlight && (
+        <div className="mt-8">
+          <BookingForm flight={selectedFlight} onClose={() => setSelectedFlight(null)} />
+        </div>
       )}
-
-      {confirmationMessage && <p>{confirmationMessage}</p>}
     </div>
   );
 }

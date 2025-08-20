@@ -119,7 +119,6 @@ const Footer = () => {
       <div className="footer-bottom">
         <div className="footer-brand">
           <div className="logo-wrapper">
-            <img src="/images/bharat.jpg" alt="Bharat Yatra" className="footer-logo" />
             <span className="brand-name">Bharat Yatra</span>
           </div>
           <p className="tagline">Wings of Change. Welcome Aboard.</p>

@@ -6,45 +6,35 @@ import "./SignIn.css";
 export default function SignIn() {
   const [activeTab, setActiveTab] = useState("personal");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      setError("Please enter both email and password");
+    if (!email) {
+      setError("Please enter your email");
       return;
     }
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login", {
+      const res = await axios.post("http://localhost:8000/api/auth/login", {
         email,
-        password,
-        accountType: activeTab
+        accountType: activeTab,
       });
 
-      // API ने role परत दिला आहे असं गृहीत धरून
-      localStorage.setItem("role", res.data.role);
+      // ✅ Token localStorage मध्ये save कर
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("email", res.data.user.email);
 
       setError("");
-
-      if (res.data.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      navigate("/"); // login झाल्यावर home ला redirect
     } catch (err) {
-      setError(
-        err.response?.data?.message || "Login failed. Please try again."
-      );
+      setError(err.response?.data?.message || "Login failed. Please try again.");
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        {/* LEFT SIDE */}
         <div className="login-left">
           {activeTab === "personal" ? (
             <>
@@ -57,7 +47,7 @@ export default function SignIn() {
             </>
           ) : (
             <>
-              <img src="/images/business.jpg" alt="Businessman" className="login-img" />
+              <img src="/images/business.png" alt="Businessman" className="login-img" />
               <ul className="benefits">
                 <li>Access to Special Corporate Fares</li>
                 <li>Real-time Booking & Cancellation Reports</li>
@@ -67,9 +57,7 @@ export default function SignIn() {
           )}
         </div>
 
-        {/* RIGHT SIDE */}
         <div className="login-right">
-          {/* Tabs */}
           <div className="tabs">
             <button
               className={activeTab === "personal" ? "tab active" : "tab"}
@@ -86,35 +74,17 @@ export default function SignIn() {
           </div>
 
           <h3>Login or Create an Account</h3>
-
-          {/* Email */}
-          <label className="label">
-            {activeTab === "personal" ? "Email Id / Mobile Number" : "Work Email"}
-          </label>
+          <label className="label">{activeTab === "personal" ? "Email Id / Mobile Number" : "Work Email"}</label>
           <input
             type="text"
-            placeholder={
-              activeTab === "personal" ? "Email Id / Mobile Number" : "Enter Work Email"
-            }
+            placeholder={activeTab === "personal" ? "Email Id / Mobile Number" : "Enter Work Email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="input"
           />
 
-          {/* Password */}
-          <label className="label">Password</label>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input"
-          />
+          {error && <p style={{ color: "red" }}>{error}</p>}
 
-          {/* Error message */}
-          {error && <p style={{ color: "red", marginTop: "5px" }}>{error}</p>}
-
-          {/* Login Button */}
           <button className="login-btn" onClick={handleLogin}>
             Login
           </button>
@@ -125,13 +95,6 @@ export default function SignIn() {
             <a href="/privacy">Privacy Policy</a> &{" "}
             <a href="/agreement">Master User Agreement</a>.
           </p>
-
-          <div className="divider">Or</div>
-
-          {/* Google Sign In */}
-          <button className="google-btn">
-            <img src="/images/google-icon.png" alt="Google" /> Sign in with Google
-          </button>
         </div>
       </div>
     </div>

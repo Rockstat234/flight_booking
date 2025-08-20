@@ -1,75 +1,169 @@
-/* Reset some default styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Wrapper & Card */
+.manage-booking-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #fefefe, #f0f0f0);
+  padding: 40px 20px;
 }
 
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
-}
-
-.manage-booking-container {
-  max-width: 400px;
-  margin: 60px auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.manage-booking-container h1 {
+.manage-booking-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px 35px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
   text-align: center;
-  margin-bottom: 24px;
-  color: #d2232a; /* Air India red accent */
 }
 
+/* Heading & Subtitle */
+.manage-booking-card h1 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #d32f2f;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+/* Form */
 .booking-form .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 .booking-form label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   font-weight: 600;
+  color: #333;
+  font-size: 15px;
 }
 
-.booking-form input[type="text"] {
+.booking-form input {
   width: 100%;
-  padding: 10px 12px;
+  padding: 14px 16px;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
   font-size: 16px;
+  box-sizing: border-box;
+  transition: 0.3s;
 }
 
-.booking-form input[type="text"]:focus {
+.booking-form input:focus {
+  border-color: #d32f2f;
   outline: none;
-  border-color: #d2232a;
-  box-shadow: 0 0 4px rgba(210, 35, 42, 0.3);
+  box-shadow: 0 0 8px rgba(211, 47, 47, 0.2);
 }
 
+/* Submit Button */
 .btn-submit {
   width: 100%;
-  padding: 12px;
-  background-color: #d2232a;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
+  padding: 16px;
+  background-color: #d32f2f;
+  color: #fff;
+  font-weight: 700;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
+  font-size: 18px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  margin-top: 10px;
+  transition: 0.3s;
 }
 
 .btn-submit:hover {
-  background-color: #b71c24;
+  background-color: #b71c1c;
 }
 
-.info-note {
-  margin-top: 20px;
+/* Booking List */
+.booking-list {
+  margin-top: 40px;
+  text-align: left;
+}
+
+.booking-list h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  color: #d32f2f;
+}
+
+.booking-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Booking List Items */
+.booking-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background-color: #fff3f3;
+  border: 1px solid #f5c2c2;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+}
+
+.booking-list li span:hover {
+  background-color: #fddede;
+}
+
+/* Delete Button */
+.btn-delete {
+  padding: 6px 12px;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
   font-size: 14px;
-  text-align: center;
-  color: #555;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-delete:hover {
+  background-color: #d32f2f;
+}
+
+/* Search Input */
+.search-input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+  transition: 0.3s;
+}
+
+.search-input:focus {
+  border-color: #d32f2f;
+  outline: none;
+  box-shadow: 0 0 8px rgba(211, 47, 47, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .manage-booking-card {
+    padding: 30px 20px;
+  }
+
+  .booking-form input,
+  .search-input {
+    font-size: 15px;
+    padding: 12px 14px;
+  }
+
+  .btn-submit {
+    font-size: 16px;
+    padding: 14px;
+  }
 }

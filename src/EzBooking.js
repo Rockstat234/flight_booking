@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./EzBooking.css";
-import { searchFlights, createBooking, payBooking } from "./api";
+import { searchFlights, createBooking, payBooking, fetchHotels, bookHotel } from "./api";
+
 
 function EzBooking() {
   const [formData, setFormData] = useState({
@@ -21,39 +22,121 @@ function EzBooking() {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("credit");
 
-  // 🔎 Search flights from backend
-  const handleSubmit = async (e) => {
+  // Handle form input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Generate demo flights
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setMessage("");
-    setConfirmationMessage("");
+    const { from, to, departure, return: returnDate, passengers, travelClass } =
+      formData;
+
+    if (!from || !to || !departure) {
+      alert("Please fill in From, To, and Departure date.");
+      return;
+    }
+
+    const randomInt = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const airlines = ["Air India", "IndiGo", "SpiceJet", "GoAir", "Vistara"];
+    const times = ["06:00", "09:30", "12:45", "15:20", "18:10", "21:00"];
+    const flightsGenerated = [];
+
+    const generateFlights = (origin, destination, date) => {
+      for (let i = 0; i < 3; i++) {
+        const departureTime = times[randomInt(0, times.length - 1)];
+        const durationHours = randomInt(1, 3);
+        const durationMinutes = randomInt(0, 59);
+        const priceBase = 1500 + randomInt(0, 2000);
+
+        flightsGenerated.push({
+          id: `${origin}-${destination}-${i}-${Date.now()}`,
+          airline: airlines[randomInt(0, airlines.length - 1)],
+          from: origin,
+          to: destination,
+          departure: date,
+          departureTime,
+          arrivalTime: (() => {
+            const [hour, min] = departureTime.split(":").map(Number);
+            let arrHour = hour + durationHours;
+            let arrMin = min + durationMinutes;
+            if (arrMin >= 60) {
+              arrHour += 1;
+              arrMin -= 60;
+            }
+            if (arrHour >= 24) arrHour -= 24;
+            return `${arrHour.toString().padStart(2, "0")}:${arrMin
+              .toString()
+              .padStart(2, "0")}`;
+          })(),
+          duration: `${durationHours}h ${durationMinutes}m`,
+          travelClass,
+          passengers,
+          price: priceBase * passengers,
+        });
+      }
+    };
+
+    generateFlights(from, to, departure);
+
+    if (returnDate) {
+      generateFlights(to, from, returnDate);
+    }
+
+    setTickets(flightsGenerated);
+    setMessage(`We found ${flightsGenerated.length} flights for you!`);
+    setShowForm(false);
+    setBookedTicketId(null);
+  };
+
+  // Book a ticket
+  const handleBookTicket = async (id) => {
+    const t = tickets.find((x) => x.id === id);
+    if (!t) return;
+
     try {
-      const { count, flights } = await searchFlights(formData);
-      setTickets(flights);
-      setMessage(`We found ${count} flights for you!`);
-      setShowForm(false);
-      setBookedTicketId(null);
+      const booking = await createBooking(t);
+      setSelectedTicket({ ...t, _dbId: booking.id || booking._id });
+      setShowPayment(true);
     } catch (err) {
       console.error(err);
-      setMessage("Failed to fetch flights. Please check backend (8000) & try again.");
+      setMessage("Booking failed. Please try again.");
     }
   };
 
-  // field change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((x) => ({ ...x, [name]: value }));
+  // Payment
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedTicket) return;
+
+    try {
+      const booking = await payBooking(selectedTicket._dbId, paymentMethod);
+      setBookedTicketId(selectedTicket.id);
+      setConfirmationMessage(
+        `Booking confirmed with ${selectedTicket.airline}! Txn: ${
+          booking.payment?.txnId || "N/A"
+        }`
+      );
+      setShowPayment(false);
+      setTimeout(() => setConfirmationMessage(""), 5000);
+    } catch (err) {
+      console.error(err);
+      setConfirmationMessage("Payment failed. Please try again.");
+    }
   };
 
-  // 🧾 Create booking on backend, then open payment UI
-  const handleBookTicket = async (id) => {
-    const t = tickets.find((x) => x.id === id);
-    try {
-      const { booking } = await createBooking(t);
-      setSelectedTicket({ ...t, _dbId: booking._id });
-      setShowPayment(true);
-    } catch (e) {
-      console.error(e);
-      setMessage("Booking failed. Please try again.");
+  // Cancel ticket
+  const handleCancelTicket = (id) => {
+    const remaining = tickets.filter((t) => t.id !== id);
+    setTickets(remaining);
+    if (remaining.length === 0) {
+      setMessage("All tickets removed. Please search again.");
+      setConfirmationMessage("");
+      setShowForm(true);
     }
   };
 
@@ -64,32 +147,7 @@ function EzBooking() {
     setTickets([]);
     setBookedTicketId(null);
     setShowPayment(false);
-  };
-
-  const handleCancelTicket = (id) => {
-    const remaining = tickets.filter((t) => t.id !== id);
-    setTickets(remaining);
-    if (remaining.length === 0) {
-      setMessage("All tickets removed. Please search again.");
-      setConfirmationMessage("");
-    }
-  };
-
-  // 💳 Simulate payment and mark booking paid
-  const handlePaymentSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const { booking } = await payBooking(selectedTicket._dbId, paymentMethod);
-      setBookedTicketId(selectedTicket.id);
-      setConfirmationMessage(
-        `Booking confirmed with ${selectedTicket.airline}! Txn: ${booking.payment.txnId}`
-      );
-      setShowPayment(false);
-      setTimeout(() => setConfirmationMessage(""), 5000);
-    } catch (err) {
-      console.error(err);
-      setConfirmationMessage("Payment failed. Please try again.");
-    }
+    setSelectedTicket(null);
   };
 
   return (
@@ -199,177 +257,70 @@ function EzBooking() {
         </form>
       ) : showPayment ? (
         <div className="payment-container">
-          <div className="payment-summary">
-            <h3>Payment Summary</h3>
-            <div className="ticket-info">
-              <p>
-                <strong>Flight:</strong> {selectedTicket.airline}{" "}
-                {selectedTicket.flightNumber}
-              </p>
-              <p>
-                <strong>Route:</strong> {selectedTicket.from} →{" "}
-                {selectedTicket.to}
-              </p>
-              <p>
-                <strong>Departure:</strong> {selectedTicket.departure} at{" "}
-                {selectedTicket.departureTime}
-              </p>
-              <p>
-                <strong>Class:</strong> {selectedTicket.travelClass}
-              </p>
-              <p>
-                <strong>Passengers:</strong> {selectedTicket.passengers}
-              </p>
-              <p className="total-price">
-                <strong>Total:</strong> ₹{selectedTicket.price.toLocaleString()}
-              </p>
-            </div>
-          </div>
-
+          <h3>Payment for {selectedTicket?.airline}</h3>
           <form className="payment-form" onSubmit={handlePaymentSubmit}>
             <div className="form-group">
               <label>Payment Method</label>
-              <div className="payment-options">
-                {["credit", "debit", "upi", "netbanking"].map((m) => (
-                  <label key={m}>
-                    <input
-                      type="radio"
-                      name="paymentMethod"
-                      value={m}
-                      checked={paymentMethod === m}
-                      onChange={() => setPaymentMethod(m)}
-                    />
-                    {m === "credit"
-                      ? "Credit Card"
-                      : m === "debit"
-                      ? "Debit Card"
-                      : m === "upi"
-                      ? "UPI"
-                      : "Net Banking"}
-                  </label>
-                ))}
-              </div>
+              {["credit", "debit", "upi", "netbanking"].map((m) => (
+                <label key={m}>
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value={m}
+                    checked={paymentMethod === m}
+                    onChange={() => setPaymentMethod(m)}
+                  />
+                  {m.charAt(0).toUpperCase() + m.slice(1)}
+                </label>
+              ))}
             </div>
-
-            {paymentMethod === "credit" || paymentMethod === "debit" ? (
-              <>
-                <div className="form-group">
-                  <label>Card Number</label>
-                  <input type="text" placeholder="1234 5678 9012 3456" required />
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Expiry Date</label>
-                    <input type="text" placeholder="MM/YY" required />
-                  </div>
-                  <div className="form-group">
-                    <label>CVV</label>
-                    <input type="text" placeholder="123" required />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label>Cardholder Name</label>
-                  <input type="text" placeholder="John Doe" required />
-                </div>
-              </>
-            ) : paymentMethod === "upi" ? (
-              <div className="form-group">
-                <label>UPI ID</label>
-                <input type="text" placeholder="name@upi" required />
-              </div>
-            ) : (
-              <div className="form-group">
-                <label>Select Bank</label>
-                <select required>
-                  <option value="">Select your bank</option>
-                  <option value="sbi">State Bank of India</option>
-                  <option value="hdfc">HDFC Bank</option>
-                  <option value="icici">ICICI Bank</option>
-                  <option value="axis">Axis Bank</option>
-                  <option value="pnb">Punjab National Bank</option>
-                </select>
-              </div>
-            )}
-
-            <div className="form-actions">
-              <button
-                type="button"
-                className="cancel-btn"
-                onClick={() => setShowPayment(false)}
-              >
-                Back
-              </button>
-              <button type="submit" className="pay-now-btn">
-                Pay Now
-              </button>
-            </div>
+            <button type="submit" className="pay-now-btn">
+              Pay Now
+            </button>
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => setShowPayment(false)}
+            >
+              Back
+            </button>
           </form>
         </div>
       ) : (
         <div className="tickets-container">
-          {tickets.map((t) => (
-            <div
-              key={t.id}
-              className={`ticket-card ${bookedTicketId === t.id ? "booked" : ""}`}
-            >
-              <div className="ticket-header">
-                <div className="airline-info">
-                  <span className="airline-logo">{t.logo}</span>
-                  <h3>{t.airline}</h3>
-                </div>
+          {Array.isArray(tickets) &&
+            tickets.map((t) => (
+              <div
+                key={t.id}
+                className={`ticket-card ${
+                  bookedTicketId === t.id ? "booked" : ""
+                }`}
+              >
+                <h3>{t.airline}</h3>
+                <p>
+                  {t.from} → {t.to}
+                </p>
+                <p>
+                  Departure: {t.departure} ({t.departureTime}) | Arrival:{" "}
+                  {t.arrivalTime}
+                </p>
+                <p>Duration: {t.duration}</p>
+                <p>Class: {t.travelClass}</p>
+                <p>Passengers: {t.passengers}</p>
+                <p>Price: ₹{t.price}</p>
                 {bookedTicketId !== t.id && (
-                  <button
-                    className="remove-ticket"
-                    onClick={() => handleCancelTicket(t.id)}
-                  >
-                    ×
-                  </button>
+                  <>
+                    <button onClick={() => handleBookTicket(t.id)}>
+                      Book Now
+                    </button>
+                    <button onClick={() => handleCancelTicket(t.id)}>
+                      Cancel
+                    </button>
+                  </>
                 )}
+                {bookedTicketId === t.id && <p>Ticket Confirmed</p>}
               </div>
-
-              <div className="ticket-details">
-                <div className="route-info">
-                  <div className="time-place">
-                    <strong>{t.departureTime}</strong>
-                    <p>{t.from}</p>
-                  </div>
-                  <div className="duration">
-                    <span>{t.duration}</span>
-                    <div className="flight-line"></div>
-                  </div>
-                  <div className="time-place">
-                    <strong>{t.arrivalTime}</strong>
-                    <p>{t.to}</p>
-                  </div>
-                </div>
-
-                <div className="flight-class">
-                  <span>Flight: {t.flightNumber}</span>
-                  <span>Class: {t.travelClass}</span>
-                </div>
-
-                <div className="price-section">
-                  <span className="price">₹{t.price.toLocaleString()}</span>
-                  <span>
-                    {t.passengers} {t.passengers > 1 ? "passengers" : "passenger"}
-                  </span>
-                </div>
-              </div>
-
-              {bookedTicketId === t.id ? (
-                <div className="booked-label">Ticket Confirmed</div>
-              ) : (
-                <div className="ticket-actions">
-                  <button className="book-btn" onClick={() => handleBookTicket(t.id)}>
-                    Book Now
-                  </button>
-                  <button className="cancel-btn" onClick={() => handleCancelTicket(t.id)}>
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>
