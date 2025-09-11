@@ -28,7 +28,9 @@ export default function SignIn() {
       setError("");
       navigate("/"); // login झाल्यावर home ला redirect
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed. Please try again.");
+      setError(
+        err.response?.data?.message || "Login failed. Please try again."
+      );
     }
   };
 
@@ -38,7 +40,11 @@ export default function SignIn() {
         <div className="login-left">
           {activeTab === "personal" ? (
             <>
-              <img src="/images/personal.png" alt="Traveler" className="login-img" />
+              <img
+                src="/images/personal.jpg"
+                alt="Traveler"
+                className="login-img"
+              />
               <ul className="benefits">
                 <li>Unlock Exclusive Deals on every booking</li>
                 <li>Zero Convenience Fee with Yatra Prime</li>
@@ -47,7 +53,11 @@ export default function SignIn() {
             </>
           ) : (
             <>
-              <img src="/images/business.png" alt="Businessman" className="login-img" />
+              <img
+                src="/images/business.jpg"
+                alt="Businessman"
+                className="login-img"
+              />
               <ul className="benefits">
                 <li>Access to Special Corporate Fares</li>
                 <li>Real-time Booking & Cancellation Reports</li>
@@ -74,10 +84,18 @@ export default function SignIn() {
           </div>
 
           <h3>Login or Create an Account</h3>
-          <label className="label">{activeTab === "personal" ? "Email Id / Mobile Number" : "Work Email"}</label>
+          <label className="label">
+            {activeTab === "personal"
+              ? "Email Id / Mobile Number"
+              : "Work Email"}
+          </label>
           <input
             type="text"
-            placeholder={activeTab === "personal" ? "Email Id / Mobile Number" : "Enter Work Email"}
+            placeholder={
+              activeTab === "personal"
+                ? "Email Id / Mobile Number"
+                : "Enter Work Email"
+            }
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="input"

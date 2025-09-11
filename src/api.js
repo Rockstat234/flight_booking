@@ -17,17 +17,10 @@ export async function searchFlights(payload) {
 
 /* 🛒 Create Flight Booking */
 export async function createBooking(ticket) {
-  const res = await fetch(`${BASE}/bookings`, {
+  const res = await fetch(`${BASE}/book`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      flightId: ticket._id || ticket.id,
-      passengers: ticket.passengers || 1,
-      travelClass: ticket.travelClass || "economy",
-      amount: Number(ticket.price) || 0, // ✅ backend requires amount (Number)
-      customerName: ticket.customerName || "Demo User",
-      customerEmail: ticket.customerEmail || "demo@example.com",
-    }),
+    body: JSON.stringify(ticket), // 👈 full booking object पास करा
   });
   if (!res.ok) {
     const err = await res.text();
@@ -37,14 +30,18 @@ export async function createBooking(ticket) {
 }
 
 /* 💳 Pay for Booking */
-export async function payBooking(bookingId, amount, method = "card") {
+export async function payBooking({ bookingId, amount, method = "credit" }) {
+  if (!bookingId || !amount || !method) {
+    throw new Error("bookingId, amount आणि method required आहेत");
+  }
+
   const res = await fetch(`${BASE}/payments`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       bookingId,
-      amount: Number(amount), // ✅ amount must be a number
-      method, // must match backend enum (card / upi / netbanking)
+      amount: Number(amount),
+      method,
     }),
   });
   if (!res.ok) {
@@ -54,34 +51,28 @@ export async function payBooking(bookingId, amount, method = "card") {
   return res.json();
 }
 
-/* 🏨 Fetch Hotels */
-export async function fetchHotels() {
-  const res = await fetch(`${BASE}/hotels`, {
+/* 🎫 Get Ticket by PNR */
+export async function getTicket(pnr) {
+  const res = await fetch(`${BASE}/ticket/${pnr}`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`❌ fetchHotels failed: ${err}`);
+    throw new Error(`❌ getTicket failed: ${err}`);
   }
   return res.json();
 }
 
-/* 🏨 Book Hotel */
-export async function bookHotel(
-  hotelId,
-  rooms = 1,
-  userName = "Demo User",
-  email = "demo@example.com"
-) {
-  const res = await fetch(`${BASE}/hotel-bookings`, {
-    method: "POST",
+/* 📋 Get All Bookings */
+export async function getAllBookings() {
+  const res = await fetch(`${BASE}/all`, {
+    method: "GET",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ hotelId, rooms, userName, email }),
   });
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`❌ bookHotel failed: ${err}`);
+    throw new Error(`❌ getAllBookings failed: ${err}`);
   }
   return res.json();
 }

@@ -1,8 +1,11 @@
+/* EzBooking.css - Enhanced Version */
+
 .ezbooking-wrapper {
   max-width: 1000px;
   margin: 0 auto;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
 .booking-header {
@@ -22,319 +25,208 @@
 }
 
 .message-box {
-  background-color: #f0f7ff;
+  background: linear-gradient(90deg, #e0f0ff, #f0f7ff);
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 6px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 500;
+}
+
+.new-search-btn {
+  background: linear-gradient(90deg, #003580, #0050a0);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.new-search-btn:hover {
+  background: linear-gradient(90deg, #00204d, #003060);
+  transform: translateY(-2px);
 }
 
 .confirmation-banner {
-  background-color: #4CAF50;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
   color: white;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 6px;
   margin-bottom: 20px;
   text-align: center;
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  font-weight: 600;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .booking-form {
   background-color: white;
   padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
 }
 
 .form-row {
   display: flex;
   gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
-.form-group {
+.form-row input, .form-row select {
   flex: 1;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #333;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 10px;
+  padding: 12px;
+  border-radius: 6px;
   border: 1px solid #ddd;
-  border-radius: 4px;
   font-size: 16px;
+  transition: border-color 0.3s, box-shadow 0.2s;
 }
 
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
+.form-row input:focus, .form-row select:focus {
   border-color: #003580;
+  box-shadow: 0 0 5px rgba(0, 53, 128, 0.2);
+  outline: none;
 }
 
-.full-width {
-  width: 100%;
-}
-
-.submit-btn, .new-search-btn {
-  background-color: #003580;
+.booking-form button {
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #003580, #0050a0);
   color: white;
   border: none;
-  padding: 12px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+  border-radius: 6px;
   font-weight: 600;
-  transition: background-color 0.3s;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
 }
 
-.submit-btn:hover, .new-search-btn:hover {
-  background-color: #00204d;
+.booking-form button:hover {
+  background: linear-gradient(90deg, #00204d, #003060);
+  transform: translateY(-2px);
 }
 
 .tickets-container {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
 }
 
 .ticket-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
   padding: 20px;
-  position: relative;
-  transition: transform 0.3s;
+  border-radius: 10px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .ticket-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
-.ticket-card.booked {
-  border-left: 5px solid #4CAF50;
+.ticket-card h3 {
+  margin-top: 0;
+  color: #003580;
 }
 
-.ticket-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.airline-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.airline-logo {
-  font-size: 1.5rem;
-}
-
-.remove-ticket {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #999;
-}
-
-.remove-ticket:hover {
-  color: #ff0000;
-}
-
-.ticket-details {
-  margin-bottom: 15px;
-}
-
-.route-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.time-place {
-  text-align: center;
-}
-
-.time-place strong {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.duration {
-  text-align: center;
-  flex-grow: 1;
-  position: relative;
-  padding: 0 20px;
-}
-
-.flight-line {
-  height: 1px;
-  background-color: #ddd;
-  position: relative;
+.ticket-card p {
   margin: 5px 0;
 }
 
-.flight-line::before {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: -4px;
-  width: 8px;
-  height: 8px;
-  border-right: 2px solid #003580;
-  border-bottom: 2px solid #003580;
-  transform: rotate(-45deg);
-}
-
-.flight-class {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  color: #666;
-}
-
-.price-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.price {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #003580;
-}
-
-.ticket-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.book-btn, .cancel-btn, .pay-now-btn {
+.ticket-card button {
+  margin-top: 10px;
   padding: 10px 15px;
+  border-radius: 6px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
   font-weight: 600;
-  flex: 1;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
-.book-btn, .pay-now-btn {
-  background-color: #003580;
+.ticket-card button:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.ticket-card .book-now-btn {
+  background: linear-gradient(90deg, #003580, #0050a0);
   color: white;
 }
 
-.book-btn:hover, .pay-now-btn:hover {
-  background-color: #00204d;
-}
-
-.cancel-btn {
-  background-color: #f5f5f5;
+.ticket-card .cancel-btn {
+  background: #f5f5f5;
   color: #333;
 }
 
-.cancel-btn:hover {
-  background-color: #e0e0e0;
-}
-
-.booked-label {
-  background-color: #4CAF50;
-  color: white;
-  padding: 8px;
-  text-align: center;
-  border-radius: 4px;
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+.ticket-card .cancel-btn:hover {
+  background: #e0e0e0;
 }
 
 .payment-container {
-  display: flex;
-  gap: 30px;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  max-width: 500px;
+  margin: 0 auto 30px auto;
 }
 
-.payment-summary {
-  flex: 1;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.payment-summary h3 {
+.payment-container h3 {
+  color: #003580;
   margin-top: 0;
-  color: #003580;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-}
-
-.ticket-info p {
-  margin: 10px 0;
-}
-
-.total-price {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 20px !important;
-  color: #003580;
-}
-
-.payment-form {
-  flex: 1;
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.payment-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
   margin-bottom: 20px;
+  text-align: center;
 }
 
-.payment-options label {
+.payment-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.payment-container label {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
   cursor: pointer;
+  font-weight: 500;
 }
 
-.form-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+.payment-container input[type="radio"] {
+  transform: scale(1.3);
+}
+
+.payment-container button {
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.payment-container button[type="submit"] {
+  background: linear-gradient(90deg, #003580, #0050a0);
+  color: white;
+}
+
+.payment-container button[type="button"] {
+  background: #f5f5f5;
+  color: #333;
+}
+
+.payment-container button:hover {
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
   .form-row {
     flex-direction: column;
-    gap: 15px;
   }
-  
-  .payment-container {
-    flex-direction: column;
-  }
-  
-  .payment-options {
+
+  .tickets-container {
     grid-template-columns: 1fr;
   }
 }

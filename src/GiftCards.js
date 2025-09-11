@@ -1,5 +1,6 @@
+// src/pages/GiftCards.js
 import React, { useState, useEffect } from "react";
-import axios from "axios"; // ✅ Import axios
+import axios from "axios"; 
 import airIndiaLogo from "./images/bharat.png";
 import giftCardImage from "./images/gift-card-design.png";
 import rakshaImage from "./images/raksha.jpg";
@@ -27,6 +28,7 @@ function GiftCards() {
   const [message, setMessage] = useState("");
   const [promoCode, setPromoCode] = useState("");
   const [appliedPromo, setAppliedPromo] = useState("");
+  const [discount, setDiscount] = useState(0);
   const [submittedData, setSubmittedData] = useState(null);
 
   // Carousel
@@ -48,12 +50,28 @@ function GiftCards() {
   const occasions = ["Anniversary", "Freedom", "Birthday", "Special Moments", "Wedding"];
 
   const handleApplyPromo = () => {
-    const validCodes = ["AIOFFER08", "AITRAVELGIFT01", "AISUMMER24", "AIFESTIVE10"];
-    if (validCodes.includes(promoCode.trim().toUpperCase())) {
-      setAppliedPromo(promoCode.trim().toUpperCase());
-      alert(`Promo code ${promoCode} applied successfully!`);
+    const validCodes = {
+      AIOFFER08: 3000,
+      AISUMMER24: 2000,
+      AIFESTIVE10: "10%", // percent discount
+    };
+
+    const code = promoCode.trim().toUpperCase();
+    if (validCodes[code]) {
+      setAppliedPromo(code);
+
+      let total = denomination * quantity;
+      if (typeof validCodes[code] === "string") {
+        let percent = parseInt(validCodes[code]);
+        setDiscount((total * percent) / 100);
+      } else {
+        setDiscount(validCodes[code]);
+      }
+
+      alert(`Promo code ${code} applied successfully!`);
     } else {
       setAppliedPromo("");
+      setDiscount(0);
       alert("Invalid promo code. Please try again.");
     }
   };
@@ -74,6 +92,8 @@ function GiftCards() {
       return;
     }
 
+    const totalAmount = denomination * quantity - discount;
+
     const formData = {
       occasion: activeTab,
       denomination,
@@ -84,21 +104,20 @@ function GiftCards() {
       receiverDetails,
       message,
       promoCode: appliedPromo,
-      totalAmount: denomination * quantity,
+      discount,
+      totalAmount,
     };
 
     try {
-      // ✅ Send to backend
       const res = await axios.post("http://localhost:8000/api/giftcards", formData);
       console.log("✅ Saved:", res.data);
-      setSubmittedData(res.data); // show confirmation page
+      setSubmittedData(res.data); // confirmation
     } catch (error) {
       console.error("❌ Error saving gift card:", error);
       alert("Error while saving. Please try again.");
     }
   };
 
-  // Render form
   const renderForm = () => (
     <form onSubmit={handleSubmit} className="giftcard-form">
       {/* Denomination */}
@@ -176,14 +195,16 @@ function GiftCards() {
         <h3>Payment</h3>
         <input type="text" placeholder="Promo Code" value={promoCode} onChange={(e) => setPromoCode(e.target.value)} />
         <button type="button" onClick={handleApplyPromo}>Apply</button>
-        {appliedPromo && <p>Applied: {appliedPromo}</p>}
-        <p>Total: ₹{denomination ? (denomination * quantity).toLocaleString("en-IN") : "0"}</p>
+        {appliedPromo && <p>Applied: {appliedPromo} (Saved ₹{discount})</p>}
+        <p>
+          Total: ₹
+          {denomination ? (denomination * quantity - discount).toLocaleString("en-IN") : "0"}
+        </p>
         <button type="submit" className="pay-now-button" disabled={!denomination}>Pay Now</button>
       </div>
     </form>
   );
 
-  // Confirmation Page
   const renderConfirmation = () => (
     <div className="confirmation-page">
       <img src={airIndiaLogo} alt="Air India" className="confirmation-logo" />
