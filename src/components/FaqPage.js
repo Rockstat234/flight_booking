@@ -7,7 +7,7 @@ const FAQ_SECTIONS = [
     title: 'Booking',
     faqs: [
       {
-        q: 'How can I book a flight with Air India?',
+        q: 'How can I book a flight with Bharat Yatra ?',
         a: 'You can book via our website, mobile app, call centre or authorized travel agent.'
       },
       {

@@ -216,7 +216,7 @@ const HotelBooking = () => {
 
   return (
     <div className="hotel-booking-container">
-      <h1>🏨 Hotel Booking System</h1>
+      <h1>Hotel Booking </h1>
 
       {/* Filter */}
       <div className="filter-section">

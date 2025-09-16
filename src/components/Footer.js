@@ -50,8 +50,8 @@ const Footer = () => {
             </h3>
             <ul className="nav-links">
               <li>
-                <Link to="/domestic-routes" className="nav-link">
-                  <MapPin size={14} /> Domestic Routes
+                <Link to="/DomesticFlights" className="nav-link">
+                  <MapPin size={14} />DomesticFlights
                 </Link>
               </li>
               <li>
