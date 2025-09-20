@@ -10,6 +10,7 @@ function EzBooking() {
     return: "",
     passengers: 1,
     travelClass: "economy",
+    aadhar: "", // ✅ Aadhaar added
   });
 
   const [tickets, setTickets] = useState([]);
@@ -28,11 +29,15 @@ function EzBooking() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { from, to, departure, return: returnDate, passengers, travelClass } =
-      formData;
+    const { from, to, departure, aadhar } = formData;
 
     if (!from || !to || !departure) {
       alert("Please fill in From, To, and Departure date.");
+      return;
+    }
+
+    if (!aadhar || !/^\d{12}$/.test(aadhar)) {
+      alert("Please enter a valid 12-digit Aadhaar number.");
       return;
     }
 
@@ -51,7 +56,7 @@ function EzBooking() {
         const priceBase = 1500 + randomInt(0, 2000);
 
         flightsGenerated.push({
-          id: `${origin}-${destination}-${i}-${Date.now()}`, // ✅ fixed
+          id: `${origin}-${destination}-${i}-${Date.now()}`,
           airline: airlines[randomInt(0, airlines.length - 1)],
           from: origin,
           to: destination,
@@ -70,20 +75,21 @@ function EzBooking() {
               .toString()
               .padStart(2, "0")}`;
           })(),
-          duration: `${durationHours}h ${durationMinutes}m`, // ✅ fixed
-          travelClass,
-          passengers,
-          price: priceBase * passengers,
+          duration: `${durationHours}h ${durationMinutes}m`,
+          travelClass: formData.travelClass,
+          passengers: formData.passengers,
+          price: priceBase * formData.passengers,
           status: "available",
+          aadhar: formData.aadhar, // ✅ Aadhaar linked with ticket
         });
       }
     };
 
     generateFlights(from, to, departure);
-    if (returnDate) generateFlights(to, from, returnDate);
+    if (formData.return) generateFlights(to, from, formData.return);
 
     setTickets(flightsGenerated);
-    setMessage(`We found ${flightsGenerated.length} flights for you!`); // ✅ fixed
+    setMessage(`We found ${flightsGenerated.length} flights for you!`);
     setShowForm(false);
     setBookedTicketId(null);
   };
@@ -113,6 +119,7 @@ function EzBooking() {
       price: t.price,
       customerName: "Demo User",
       customerEmail: "demo@example.com",
+      aadhar: t.aadhar, // ✅ Aadhaar sent to backend
     };
 
     try {
@@ -146,10 +153,9 @@ function EzBooking() {
     e.preventDefault();
     if (!selectedTicket) return;
 
-    // Mock payment
     setBookedTicketId(selectedTicket.id);
     setConfirmationMessage(
-      `Booking confirmed with ${selectedTicket.airline}! Txn: MOCK123` // ✅ fixed
+      `Booking confirmed with ${selectedTicket.airline}! Txn: MOCK123`
     );
     setShowPayment(false);
     setTimeout(() => setConfirmationMessage(""), 5000);
@@ -176,7 +182,7 @@ function EzBooking() {
   };
 
   return (
-    <div className="ezbooking-wrapper">
+    <div className="EzBooking-wrapper">
       <div className="booking-header">
         <h2>EzBooking</h2>
         <p>Book your next journey with ease ✈</p>
@@ -253,6 +259,20 @@ function EzBooking() {
               <option value="first">First Class</option>
             </select>
           </div>
+          {/* ✅ Aadhaar Input */}
+          <div className="form-row">
+            <input
+              type="text"
+              name="aadhar"
+              placeholder="Enter Aadhaar Number"
+              value={formData.aadhar}
+              onChange={handleChange}
+              required
+              maxLength="12"
+              pattern="\d{12}"
+              title="Enter valid 12-digit Aadhaar number"
+            />
+          </div>
           <button type="submit">Search Flights</button>
         </form>
       ) : showPayment ? (
@@ -293,11 +313,16 @@ function EzBooking() {
               <p>Duration: {t.duration}</p>
               <p>Class: {t.travelClass}</p>
               <p>Passengers: {t.passengers}</p>
+              <p>Aadhaar: {t.aadhar}</p> {/* ✅ Show Aadhaar */}
               <p>Price: ₹{t.price}</p>
               {t.status === "available" && (
                 <>
-                  <button onClick={() => handleBookTicket(t.id)}>Book Now</button>
-                  <button onClick={() => handleCancelTicket(t.id)}>Cancel</button>
+                  <button onClick={() => handleBookTicket(t.id)}>
+                    Book Now
+                  </button>
+                  <button onClick={() => handleCancelTicket(t.id)}>
+                    Cancel
+                  </button>
                 </>
               )}
               {t.status === "processing" && <p>Booking in progress...</p>}

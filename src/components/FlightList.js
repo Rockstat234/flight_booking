@@ -13,7 +13,7 @@ function FlightList() {
     const searchParams = new URLSearchParams(location.search);
     const fetchFlights = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/flights?${searchParams}`);
+        const response = await axios.get(`http://localhost:8000/api/flights?${searchParams}`);
         setFlights(response.data);
         setLoading(false);
       } catch (err) {

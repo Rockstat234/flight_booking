@@ -73,7 +73,7 @@ const Footer = () => {
             </h3>
             <ul className="nav-links">
               <li>
-                <Link to="/customer-care" className="nav-link">
+                <Link to="/customercare" className="nav-link">
                   <Headphones size={14} /> Customer Care
                 </Link>
               </li>

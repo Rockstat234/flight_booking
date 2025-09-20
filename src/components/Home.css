@@ -1,293 +1,394 @@
-/* Main Container */
-.air-india-app {
-  font-family: 'Poppins', sans-serif;
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
   color: #333;
-  overflow-x: hidden;
 }
 
 /* Hero Section */
 .hero {
   position: relative;
-  height: 80vh;
-  max-height: 800px;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  border-bottom: 4px solid #d40504;
+  color: #fff;
 }
 
 .hero-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hero-content {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.hero-content p {
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+.cta-container .cta-button {
+  padding: 12px 25px;
+  margin: 5px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.cta-container .cta-button:hover {
+  transform: scale(1.05);
+}
+
+.cta-button {
+  background-color: #ff6600;
+  color: #fff;
+}
+
+.cta-button.secondary {
+  background-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+/* Quick Search / Recent Searches */
+.quick-search {
+  padding: 40px 10%;
+  background: #fff;
+  text-align: center;
+}
+
+.quick-search h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.search-history {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.history-card {
+  background-color: #ff6600;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.history-card:hover {
+  background-color: #e65c00;
+}
+
+/* Services Section */
+.services {
+  padding: 60px 10%;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background-color: #ff6600;
+  margin: 10px auto 20px;
+}
+
+.services-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.service-card {
+  width: 250px;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.card-image {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-content {
+  padding: 15px;
+  position: relative;
+}
+
+.hidden-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.service-card.active .hidden-content {
+  display: block;
+}
+
+.card-button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Travel Guides / Flip Cards */
+.travel-guides {
+  padding: 60px 10%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.travel-cards {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.travel-card {
+  width: 250px;
+  height: 320px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.travel-card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  backface-visibility: hidden;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card-front {
+  background-color: #fff;
+}
+
+.card-back {
+  background-color: #ff6600;
+  color: #fff;
+  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.4);
-  color: white;
+  padding: 20px;
+}
+
+.flip-indicator {
+  margin-top: 10px;
+  color: #ff6600;
+  font-weight: bold;
+}
+
+/* Destinations Slider */
+.destinations {
+  padding: 60px 10%;
+  background-color: #f9f9f9;
   text-align: center;
-  padding: 0 20px;
 }
 
-.hero-content h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-.hero-content p {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  max-width: 600px;
-}
-
-.cta-button {
-  background: #d40504;
-  color: white;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-.cta-button:hover {
-  background: #b00000;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-}
-
-/* Section Header */
-.section-header {
-  text-align: center;
-  margin: 3rem 0;
-}
-
-.section-header h2 {
-  color: #d40504;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.divider {
-  height: 4px;
-  width: 80px;
-  background: #d40504;
-  margin: 0 auto;
-  border-radius: 2px;
-}
-
-/* Flip Cards */
-.flip-cards-container {
+.destination-cards {
   display: flex;
+  gap: 20px;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
 }
 
-.flip-card {
-  background-color: transparent;
-  width: 280px;
-  height: 350px;
-  perspective: 1000px;
-}
-
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  border-radius: 12px;
-}
-
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front, 
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.flip-card-front {
+.destination-card {
+  width: 200px;
+  height: 250px;
+  border-radius: 10px;
   background-size: cover;
   background-position: center;
-  color: white;
   display: flex;
   align-items: flex-end;
+  padding: 15px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-.flip-card-back {
-  background: linear-gradient(135deg, #d40504 0%, #a00000 100%);
-  color: white;
-  transform: rotateY(180deg);
+/* Flash Deals */
+.flash-deals {
+  padding: 60px 10%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.deals-cards {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 30px;
 }
 
-.card-content {
-  padding: 1.5rem;
-  width: 100%;
+.deal-card {
+  background-color: #ff6600;
+  color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 220px;
+  text-align: center;
 }
 
-.flip-card-front .card-content {
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+/* Testimonials */
+.testimonials {
+  padding: 60px 10%;
+  background-color: #f9f9f9;
+  text-align: center;
 }
 
-.flip-card h3 {
-  font-size: 1.4rem;
-  margin-bottom: 0.8rem;
-}
-
-.flip-card p {
-  font-size: 0.95rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-.flip-hint {
-  font-size: 0.8rem;
-  opacity: 0.8;
-  margin-top: 1rem;
-  animation: pulse 2s infinite;
-}
-
-.card-button {
-  background: white;
-  color: #d40504;
-  border: none;
-  padding: 8px 20px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.card-button:hover {
-  background: #f0f0f0;
-  transform: translateY(-2px);
-}
-
-/* Travel Cards */
-.travel-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.travel-card {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.travel-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-}
-
-.card-image {
-  height: 200px;
-  background-size: cover;
-  background-position: center;
-}
-
-.card-body {
-  padding: 1.5rem;
-}
-
-.card-body h3 {
-  color: #4a154b;
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-}
-
-.card-body p {
-  color: #555;
-  margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
-
-/* Floating CTA */
-.floating-cta {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: #d40504;
-  color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 1rem 1.5rem;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+.testimonial-cards {
   display: flex;
-  align-items: center;
-  transition: all 0.3s ease;
-  z-index: 100;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.floating-cta:hover {
-  background: #b00000;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+.testimonial-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-/* Animations */
-@keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 1; }
-  100% { opacity: 0.6; }
+/* Safety Guidelines */
+.safety-guidelines {
+  padding: 40px 10%;
+  background-color: #fff;
+  text-align: center;
+}
+
+/* App Promotion */
+.app-promo {
+  padding: 40px 10%;
+  background-color: #ff6600;
+  color: #fff;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.app-buttons button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #fff;
+  color: #ff6600;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Newsletter */
+.newsletter {
+  padding: 60px 10%;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.newsletter input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.newsletter button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #ff6600;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 30px 10%;
+  text-align: center;
+}
+
+footer .social-icons span {
+  margin: 0 10px;
+  cursor: pointer;
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-  .hero-content h1 {
-    font-size: 2.5rem;
+@media(max-width: 768px){
+  .services-container, .travel-cards, .destination-cards, .deals-cards, .testimonial-cards {
+    flex-direction: column;
+    align-items: center;
   }
-  
-  .hero-content p {
-    font-size: 1.2rem;
-  }
-  
-  .flip-card {
-    width: 220px;
-    height: 300px;
-  }
-  
-  .section-header h2 {
-    font-size: 2rem;
+
+  .cta-container .cta-button {
+    width: 80%;
+    margin: 5px 0;
   }
 }

@@ -30,8 +30,9 @@ import FlightCreate from "./components/FlightCreate";
 import HotelList from "./pages/HotelList";
 import BookingDetails from './components/BookingDetails';
 import CheckIn from './components/CheckIn';
-// ✈ New Page for Flight Search + Booking
 
+// ✅ New Page (Customer Care)
+import CustomerCare from "./components/CustomerCare";
 
 function App() {
   return (
@@ -60,11 +61,13 @@ function App() {
           <Route path="/bookflights" element={<BookFlights />} />
           <Route path="/create-flight" element={<FlightCreate />} />
           <Route path="/hotels" element={<HotelList />} />
-          <Route path="/booking-details" element={<BookingDetails />}
-           /><Route path="/checkIn" element={<CheckIn />} />
-          {/* ✈ Flight Search + Booking Page */}
- 
+          <Route path="/booking-details" element={<BookingDetails />} />
+          <Route path="/checkIn" element={<CheckIn />} />
+
+          {/* ✅ Customer Care Route */}
+          <Route path="/customercare" element={<CustomerCare />} />
         </Routes>
+
         <Footer />
       </div>
     </div>

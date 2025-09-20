@@ -1,0 +1,88 @@
+.customer-care-wrapper {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+}
+
+.customer-care-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.customer-care-header h2 {
+  font-size: 28px;
+  color: #004aad;
+  margin-bottom: 10px;
+}
+
+.customer-care-header p {
+  font-size: 16px;
+  color: #666;
+}
+
+.contact-info {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.contact-info p {
+  margin: 5px 0;
+  font-weight: 500;
+}
+
+.support-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.support-form input,
+.support-form textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.support-form input:focus,
+.support-form textarea:focus {
+  border-color: #004aad;
+  box-shadow: 0 0 6px rgba(0, 74, 173, 0.2);
+}
+
+.support-form button {
+  background: #004aad;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.support-form button:hover {
+  background: #00337a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .customer-care-wrapper {
+    padding: 20px;
+  }
+
+  .customer-care-header h2 {
+    font-size: 24px;
+  }
+}
